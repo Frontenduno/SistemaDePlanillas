@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search } from 'lucide-react';
+import Link from "next/link";
 
 export default function CollaboratorPage() {
   // Mock de colaboradores
@@ -133,9 +134,11 @@ export default function CollaboratorPage() {
                   </Badge>
                 </td>
                 <td className="p-3">
-                  <Button variant="outline" size="icon" className="border-blue-700 text-blue-700 hover:bg-blue-100">
-                    🔍
-                  </Button>
+                  <Link href={`/collaborator/${item.id}`}>
+                    <Button variant="outline" size="icon" className="border-blue-700 text-blue-700 hover:bg-blue-100">
+                      🔍
+                    </Button>
+                  </Link>
                 </td>
               </tr>
             ))}

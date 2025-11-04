@@ -1,0 +1,27 @@
+export const mockCollaborator = {
+  id: 1,
+  nombre: "Pedro Iara",
+  documento: "L.E / DNI - 374832423",
+  fechaNacimiento: "30/07/1982",
+  sexo: "Masculino",
+  estadoCivil: "Soltero",
+  paisEmisor: "Perú",
+  nacionalidad: "Perú",
+  telefono: "974832423",
+  correo: "pedrolara12@gmail.com",
+  direccion: "Lima - San Juan de Lurigancho",
+  foto: "https://randomuser.me/api/portraits/men/32.jpg",
+
+  // Laborales
+  periodoInicio: "01/10/2025",
+  periodoFin: "",
+  tipoTrabajador: "OBRERO",
+  regimenLaboral: "CONSTRUCCION CIVIL",
+  categoriaOcupacional: "OBRERO",
+  ocupacionCodigo: "314010",
+  ocupacionNombre: "TECNICO MECANICO",
+  tipoContrato: "POR NECES DEL MERCADO",
+  tipoPago: "EFECTIVO",
+  periodicidadPago: "MENSUAL",
+  remuneracion: "1200.00",
+};

@@ -25,9 +25,9 @@ export default function Sidebar({ isOpen }: SidebarProps) {
     { icon: MdDashboard, label: 'Panel de Control', href: '/dashboard' },
     { icon: MdPeople, label: 'Colaboradores', href: '/collaborator' },
     { icon: MdDescription, label: 'Registro Personal', href: '/reportes' },
-    { icon: FaLocationArrow, label: 'Vacaciones', href: '/configuracion' },
-    { icon: FaCalendarCheck, label: 'Ctrl. de Asistencias', href: '/configuracion' },
-    { icon: PiBagSimpleFill, label: 'Empresas', href: '/configuracion' },
+    { icon: FaLocationArrow, label: 'Vacaciones', href: '/vacaciones' },
+    { icon: FaCalendarCheck, label: 'Ctrl. de Asistencias', href: '/asistencias' },
+    { icon: PiBagSimpleFill, label: 'Empresas', href: '/empresas' },
   ];
 
   return (
