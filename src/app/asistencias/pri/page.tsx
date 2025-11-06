@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +13,7 @@ import {
 } from "@/components/ui/select";
 
 export default function RevisionAsistencia() {
+  const router = useRouter();
   const [filtros, setFiltros] = useState({
     empresa: "Fábrica XYZ S.A.C.",
     periodo: "Marzo",
@@ -308,7 +310,10 @@ export default function RevisionAsistencia() {
             {">"}
           </Button>
         </div>
-        <Button className="bg-blue-700 text-white">
+        <Button
+          className="bg-blue-700 text-white"
+          onClick={() => router.push('/asistencias/revi')}
+        >
           Revisión de Asistencias
         </Button>
       </div>
