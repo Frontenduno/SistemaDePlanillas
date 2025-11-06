@@ -1,0 +1,58 @@
+{
+  "trabajadoresNuevos": [
+    { "nombre": "Luis", "apellido": "Pérez", "imagen": null },
+    { "nombre": "Carmen", "apellido": "Gutiérrez", "imagen": null },
+    { "nombre": "Alejandra", "apellido": "Espinoza", "imagen": null }
+  ],
+  "cumpleanos": [
+    { "nombre": "Luis", "apellido": "Bravo", "fecha": "Sábado 21", "imagen": null },
+    { "nombre": "Carmen", "apellido": "Gutiérrez", "fecha": "Domingo 22", "imagen": null },
+    { "nombre": "Alejandra", "apellido": "Espinoza", "fecha": "Domingo 22", "imagen": null },
+    { "nombre": "Felipe", "apellido": "Ruiz", "fecha": "Domingo 21", "imagen": null },
+    { "nombre": "Luis", "apellido": "Pérez", "fecha": "Domingo 21", "imagen": null },
+    { "nombre": "Carmen", "apellido": "Gutiérrez", "fecha": "Domingo 21", "imagen": null }
+  ],
+  "usuario": {
+    "nombre": "Francisco",
+    "apellido": "Álvarez Ruiz",
+    "puesto": "Recursos Humanos",
+    "fechaNacimiento": "21 - 03 - 2025",
+    "edad": 34,
+    "imagen": null
+  },
+  "colaboradores": {
+    "trabajadores": 114,
+    "trabajadoresNuevos": 31
+  },
+  "asistencias": {
+    "diasNoTrabajados": 17,
+    "diasJustificados": 9
+  },
+  "vacaciones": {
+    "diasTomados": 17,
+    "diasPendientes": 6
+  },
+  "procesos": [
+    {
+      "id": "item-1",
+      "mes": "Julio '23",
+      "icono": "red",
+      "contenido": []
+    },
+    {
+      "id": "item-2",
+      "mes": "Agosto '23",
+      "icono": "green",
+      "contenido": []
+    }
+  ],
+  "chartData": [
+    { "mes": "Abr", "value": 20 },
+    { "mes": "May", "value": 45 },
+    { "mes": "Jun", "value": 25 },
+    { "mes": "Jul", "value": 35 },
+    { "mes": "Ago", "value": 55 },
+    { "mes": "Sep", "value": 48 },
+    { "mes": "Oct", "value": 42 }
+  ]
+}
