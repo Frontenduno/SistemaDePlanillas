@@ -1,44 +1,90 @@
 'use client';
 import { mockCollaborator } from "../mock/collaboratorData";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 export default function ProfileHeader() {
   const col = mockCollaborator;
 
   return (
-    <div className="bg-white shadow rounded-lg p-6 mb-4 flex justify-between items-center">
-      <div className="flex gap-6">
+    <div className="bg-white shadow rounded-lg p-5 mb-4 flex justify-between items-start">
+      {/* 🔹 Sección izquierda: avatar + información */}
+      <div className="flex gap-6 w-full">
+        {/* Avatar del colaborador */}
+        <div className="flex-shrink-0">
+          <Avatar className="size-24 border">
+            <AvatarImage src={col.foto} alt={col.nombre} />
+            <AvatarFallback>{col.nombre.charAt(0)}</AvatarFallback>
+          </Avatar>
+        </div>
 
-        <div className="space-y-1 text-sm">
-          <p>
-            <strong>Tipo y número de documento:</strong> {col.documento}
-          </p>
-          <p>
-            <strong>Apellidos y Nombres:</strong> {col.nombre}
-          </p>
-          <p>
-            <strong>Fecha de nacimiento:</strong> {col.fechaNacimiento}
-          </p>
-          <p>
-            <strong>Sexo:</strong> {col.sexo} &nbsp;&nbsp;
-            <strong>Estado civil:</strong> {col.estadoCivil}
-          </p>
-          <p>
-            <strong>País emisor documento:</strong> {col.paisEmisor} &nbsp;&nbsp;
-            <strong>Nacionalidad:</strong> {col.nacionalidad}
-          </p>
-          <p>
-            <strong>Teléfono:</strong> {col.telefono} &nbsp;&nbsp;
-            <strong>Correo electrónico:</strong> {col.correo}
-          </p>
-          <p>
-            <strong>Dirección:</strong> {col.direccion}
-          </p>
+        {/* Datos del colaborador */}
+        <div className="flex flex-col flex-1 text-sm space-y-2">
+          <div className="flex flex-wrap gap-x-6">
+            <p>
+              <strong>Tipo y número de documento:</strong> {col.documento}
+            </p>
+            <p>
+              <strong>Fecha de nacimiento:</strong> {col.fechaNacimiento}
+            </p>
+            <p>
+              <strong>País emisor documento:</strong> {col.paisEmisor}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-x-6">
+            <p>
+              <strong>Apellidos y Nombres:</strong> {col.nombre}
+            </p>
+            <p>
+              <strong>Sexo:</strong> {col.sexo}
+            </p>
+            <p>
+              <strong>Estado civil:</strong> {col.estadoCivil}
+            </p>
+          </div>
+
+          {/* Línea divisoria */}
+          <hr className="my-2 border-gray-200" />
+
+          {/* Campos de entrada */}
+          <div className="grid grid-cols-3 gap-3 items-end">
+            <div>
+              <label className="text-xs font-semibold text-gray-600">Nacionalidad:</label>
+              <Select defaultValue={col.nacionalidad}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Perú">Perú</SelectItem>
+                  <SelectItem value="Chile">Chile</SelectItem>
+                  <SelectItem value="Ecuador">Ecuador</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <label className="text-xs font-semibold text-gray-600">Teléfono:</label>
+              <Input value={col.telefono} readOnly />
+            </div>
+
+            <div>
+              <label className="text-xs font-semibold text-gray-600">Dirección:</label>
+              <Input value={col.direccion} readOnly />
+            </div>
+          </div>
+
+          <div className="mt-2">
+            <label className="text-xs font-semibold text-gray-600">Correo electrónico:</label>
+            <Input value={col.correo} readOnly />
+          </div>
         </div>
       </div>
 
-      <Button className="bg-blue-700 hover:bg-blue-800 px-6 py-3 rounded-xl text-white">
+      {/* 🔹 Botón de la derecha */}
+      <Button className="bg-blue-700 hover:bg-blue-800 px-6 py-3 rounded-xl text-white h-fit">
         Generar Boleta
       </Button>
     </div>
