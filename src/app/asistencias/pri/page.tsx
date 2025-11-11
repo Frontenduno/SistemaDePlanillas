@@ -97,11 +97,11 @@ export default function RevisionAsistencia() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen p-4 space-y-4">
+    <div className="flex flex-col h-screen p-2 space-y-2">
       {/* PANEL SUPERIOR DE FILTROS */}
-      <div className="bg-gray-100 border rounded-xl p-4 text-sm shadow-sm">
+      <div className="bg-gray-100 border rounded-xl p-2 text-xs shadow-sm">
         {/* FILA SUPERIOR */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-2">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mb-1">
           <div className="flex items-center gap-2">
             <label className="font-semibold">Periodo:</label>
             <Select defaultValue={filtros.periodo}>
@@ -227,7 +227,7 @@ export default function RevisionAsistencia() {
       </div>
 
       {/* TABLA DE ASISTENCIAS */}
-      <div className="border rounded-xl overflow-hidden">
+      <div className="border rounded-xl overflow-hidden flex-1 overflow-y-auto">
         <table className="min-w-full border-collapse text-sm">
           <thead className="bg-white text-gray-700">
             {/* Fila 1: Agrupación */}
@@ -291,8 +291,7 @@ export default function RevisionAsistencia() {
       </div>
 
       {/* PAGINACIÓN */}
-<div className="mt-auto flex justify-between items-center pt-2 border-t border-gray-200">
-
+      <div className="flex justify-between items-center pt-2 border-t border-gray-200">
         <span className="text-sm text-gray-500">
           del 1 al 10 de 20 resultados
         </span>
@@ -312,7 +311,7 @@ export default function RevisionAsistencia() {
         </div>
         <Button
           className="bg-blue-700 text-white"
-          onClick={() => router.push('/asistencias/revi')}
+          onClick={() => router.push("/asistencias/revi")}
         >
           Revisión de Asistencias
         </Button>
