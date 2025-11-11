@@ -1,6 +1,6 @@
 'use client';
 
-import { MdDashboard, MdPeople, MdDescription, MdSettings } from 'react-icons/md';
+import { MdDashboard, MdPeople, MdDescription } from 'react-icons/md';
 import { PiBagSimpleFill } from "react-icons/pi";
 import { FaCalendarCheck, FaLocationArrow } from "react-icons/fa";
 import Link from 'next/link';
@@ -25,9 +25,9 @@ export default function Sidebar({ isOpen }: SidebarProps) {
     { icon: MdDashboard, label: 'Panel de Control', href: '/dashboard' },
     { icon: MdPeople, label: 'Colaboradores', href: '/collaborator' },
     { icon: MdDescription, label: 'Registro Personal', href: '/reportes' },
-    { icon: FaLocationArrow, label: 'Vacaciones', href: '/configuracion' },
-    { icon: FaCalendarCheck, label: 'Ctrl. de Asistencias', href: '/configuracion' },
-    { icon: PiBagSimpleFill, label: 'Empresas', href: '/configuracion' },
+    { icon: FaLocationArrow, label: 'Vacaciones', href: '/vacaciones' },
+    { icon: FaCalendarCheck, label: 'Ctrl. de Asistencias', href: '/asistencias' },
+    { icon: PiBagSimpleFill, label: 'Empresas', href: '/empresas' },
   ];
 
   return (
@@ -72,7 +72,7 @@ export default function Sidebar({ isOpen }: SidebarProps) {
                         : 'text-slate-300 hover:bg-slate-700 hover:text-white'
                     )}
                   >
-                    <Icon className="w-5 h-5 flex-shrink-0" />
+                    <Icon className="w-5 h-5 shrink-0" />
                     <motion.span
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}

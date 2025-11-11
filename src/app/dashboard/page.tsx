@@ -15,6 +15,10 @@ export default function Dashboard() {
       asistencias={dashboardData.asistencias}
       vacaciones={dashboardData.vacaciones}
       procesos={dashboardData.procesos as ProcesoItem[]}
+      trabajadoresData={dashboardData.trabajadoresData}
+      gastosData={dashboardData.gastosData}
+      horasData={dashboardData.horasData}
+      liquidacionesData={dashboardData.liquidacionesData}
     />
   );
 }

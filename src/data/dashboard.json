@@ -2,7 +2,11 @@
   "trabajadoresNuevos": [
     { "nombre": "Luis", "apellido": "Pérez", "imagen": null },
     { "nombre": "Carmen", "apellido": "Gutiérrez", "imagen": null },
-    { "nombre": "Alejandra", "apellido": "Espinoza", "imagen": null }
+    { "nombre": "Alejandra", "apellido": "Espinoza", "imagen": null },
+    { "nombre": "Roberto", "apellido": "Sánchez", "imagen": null },
+    { "nombre": "María", "apellido": "Torres", "imagen": null },
+    { "nombre": "Diego", "apellido": "Vargas", "imagen": null },
+    { "nombre": "Sofía", "apellido": "Morales", "imagen": null }
   ],
   "cumpleanos": [
     { "nombre": "Luis", "apellido": "Bravo", "fecha": "Sábado 21", "imagen": null },
@@ -10,7 +14,11 @@
     { "nombre": "Alejandra", "apellido": "Espinoza", "fecha": "Domingo 22", "imagen": null },
     { "nombre": "Felipe", "apellido": "Ruiz", "fecha": "Domingo 21", "imagen": null },
     { "nombre": "Luis", "apellido": "Pérez", "fecha": "Domingo 21", "imagen": null },
-    { "nombre": "Carmen", "apellido": "Gutiérrez", "fecha": "Domingo 21", "imagen": null }
+    { "nombre": "Carmen", "apellido": "Gutiérrez", "fecha": "Domingo 21", "imagen": null },
+    { "nombre": "María", "apellido": "González", "fecha": "Lunes 23", "imagen": null },
+    { "nombre": "Pedro", "apellido": "Martínez", "fecha": "Martes 24", "imagen": null },
+    { "nombre": "Ana", "apellido": "López", "fecha": "Miércoles 25", "imagen": null },
+    { "nombre": "Jorge", "apellido": "Ramírez", "fecha": "Jueves 26", "imagen": null }
   ],
   "usuario": {
     "nombre": "Francisco",
@@ -46,13 +54,40 @@
       "contenido": []
     }
   ],
-  "chartData": [
-    { "mes": "Abr", "value": 20 },
-    { "mes": "May", "value": 45 },
-    { "mes": "Jun", "value": 25 },
-    { "mes": "Jul", "value": 35 },
-    { "mes": "Ago", "value": 55 },
-    { "mes": "Sep", "value": 48 },
-    { "mes": "Oct", "value": 42 }
+  "trabajadoresData": [
+    { "mes": "Abr", "value": 95 },
+    { "mes": "May", "value": 102 },
+    { "mes": "Jun", "value": 98 },
+    { "mes": "Jul", "value": 106 },
+    { "mes": "Ago", "value": 114 },
+    { "mes": "Sep", "value": 110 },
+    { "mes": "Oct", "value": 118 }
+  ],
+  "gastosData": [
+    { "mes": "Abr", "value": 45000 },
+    { "mes": "May", "value": 52000 },
+    { "mes": "Jun", "value": 48000 },
+    { "mes": "Jul", "value": 55000 },
+    { "mes": "Ago", "value": 62000 },
+    { "mes": "Sep", "value": 58000 },
+    { "mes": "Oct", "value": 67000 }
+  ],
+  "horasData": [
+    { "mes": "Abr", "value": 120 },
+    { "mes": "May", "value": 145 },
+    { "mes": "Jun", "value": 135 },
+    { "mes": "Jul", "value": 168 },
+    { "mes": "Ago", "value": 155 },
+    { "mes": "Sep", "value": 142 },
+    { "mes": "Oct", "value": 178 }
+  ],
+  "liquidacionesData": [
+    { "mes": "Abr", "value": 8 },
+    { "mes": "May", "value": 5 },
+    { "mes": "Jun", "value": 12 },
+    { "mes": "Jul", "value": 7 },
+    { "mes": "Ago", "value": 15 },
+    { "mes": "Sep", "value": 9 },
+    { "mes": "Oct", "value": 6 }
   ]
 }

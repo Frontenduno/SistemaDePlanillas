@@ -16,3 +16,4 @@ export { VacacionesCard } from './components/StatsPanel/VacacionesCard';
 
 // BottomSection components
 export { ProcessPanel } from './components/BottomSection/ProcessPanel';
+export { GraphicPanel } from './components/BottomSection/GraphicPanel';

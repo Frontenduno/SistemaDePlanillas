@@ -2,8 +2,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
-import { CalendarDays, ArrowRight } from 'lucide-react';
+import { Lock, LockOpen, ArrowRight } from 'lucide-react';
 import type { ProcesoItem } from '@/lib/dashboard';
+import { CardProcesos } from './CardProcesos';
 
 interface ProcessPanelProps {
   procesos: ProcesoItem[];
@@ -62,13 +63,17 @@ export function ProcessPanel({ procesos }: ProcessPanelProps) {
                     <div
                       className={`h-6 w-6 ${getIconColor(proceso.icono)} rounded flex items-center justify-center`}
                     >
-                      <CalendarDays className="h-4 w-4 text-white" />
+                      {proceso.icono === 'red' ? (
+                        <Lock className="h-4 w-4 text-white" />
+                      ) : (
+                        <LockOpen className="h-4 w-4 text-white" />
+                      )}
                     </div>
-                    <span className="font-medium">{proceso.mes}</span>
+                    <span className="font-bold text-[#150AB4] text-lg ">{proceso.mes}</span>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent>
-                  {/* Contenido del proceso - puede ser vacío o personalizado */}
+                <AccordionContent className="px-4 py-2">
+                  <CardProcesos />
                 </AccordionContent>
               </AccordionItem>
             ))}

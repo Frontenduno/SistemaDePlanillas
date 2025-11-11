@@ -9,7 +9,8 @@ import type {
   ColaboradoresStats,
   AsistenciasStats,
   VacacionesStats,
-  ProcesoItem
+  ProcesoItem,
+  ChartDataPoint
 } from '@/lib/dashboard';
 
 interface DashboardLayoutProps {
@@ -20,6 +21,10 @@ interface DashboardLayoutProps {
   asistencias: AsistenciasStats;
   vacaciones: VacacionesStats;
   procesos: ProcesoItem[];
+  trabajadoresData: ChartDataPoint[];
+  gastosData?: ChartDataPoint[];
+  horasData?: ChartDataPoint[];
+  liquidacionesData?: ChartDataPoint[];
 }
 
 export function DashboardLayout({
@@ -29,7 +34,11 @@ export function DashboardLayout({
   colaboradores,
   asistencias,
   vacaciones,
-  procesos
+  procesos,
+  trabajadoresData,
+  gastosData,
+  horasData,
+  liquidacionesData
 }: DashboardLayoutProps) {
   return (
     <div className="grid grid-rows-2 gap-4 p-6">
@@ -41,7 +50,13 @@ export function DashboardLayout({
         asistencias={asistencias}
         vacaciones={vacaciones}
       />
-      <BottomSection procesos={procesos} />
+      <BottomSection 
+        procesos={procesos} 
+        trabajadoresData={trabajadoresData}
+        gastosData={gastosData}
+        horasData={horasData}
+        liquidacionesData={liquidacionesData}
+      />
     </div>
   );
 }
