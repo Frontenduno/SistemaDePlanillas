@@ -55,7 +55,7 @@ export function ProcessPanel({ procesos }: ProcessPanelProps) {
             </Button>
           </div>
 
-          <Accordion type="single" collapsible className="w-full" defaultValue="item-1">
+          <Accordion type="single" collapsible className="w-full" defaultValue="">
             {procesos.map((proceso) => (
               <AccordionItem key={proceso.id} value={proceso.id}>
                 <AccordionTrigger className="border-0 border-b-2 border-black rounded-none px-4">
