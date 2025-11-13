@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import type { Cumpleanos } from '@/lib/dashboard';
-import { X } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import type { Cumpleanos } from "@/lib/dashboard";
+import { X } from "lucide-react";
 
 interface BirthdaysModalProps {
   isOpen: boolean;
@@ -18,11 +18,8 @@ export function BirthdaysModal({ isOpen, onClose, data }: BirthdaysModalProps) {
   return (
     <>
       {/* Overlay */}
-      <div 
-        className="fixed inset-0 bg-black/50 z-50"
-        onClick={onClose}
-      />
-      
+      <div className="fixed inset-0 bg-black/50 z-50" onClick={onClose} />
+
       {/* Modal */}
       <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-3xl max-h-[80vh]">
         <Card className="bg-white">
@@ -33,6 +30,8 @@ export function BirthdaysModal({ isOpen, onClose, data }: BirthdaysModalProps) {
             <Button
               variant="ghost"
               size="icon"
+              aria-label="Cerrar"
+              title="Cerrar"
               className="absolute right-4 top-4"
               onClick={onClose}
             >
@@ -45,11 +44,12 @@ export function BirthdaysModal({ isOpen, onClose, data }: BirthdaysModalProps) {
                 <div key={idx} className="text-center">
                   <Avatar className="h-20 w-20 mx-auto mb-1">
                     <AvatarFallback className="bg-purple-100 text-purple-700 text-xs">
-                      {persona.nombre[0]}{persona.apellido[0]}
+                      {persona.nombre[0]}
+                      {persona.apellido[0]}
                     </AvatarFallback>
                   </Avatar>
                   <p className="text-lg font-medium text-[#150AB4] leading-5">
-                    {persona.nombre}{' '}
+                    {persona.nombre}{" "}
                     <span className="line-clamp-1">{persona.apellido}</span>
                   </p>
                   <p className="text-md text-gray-500">{persona.fecha}</p>

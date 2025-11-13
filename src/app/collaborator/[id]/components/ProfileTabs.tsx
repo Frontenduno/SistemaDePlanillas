@@ -1,6 +1,18 @@
 "use client";
+
 import { useState } from "react";
 import SummaryTab from "./SummaryTab";
+import AssistanceTab from "./AssistanceTab";
+import VacacionesTab from "./VacacionesTab";
+import IngresosTab from "./IngresosTab";
+import EgresosTab from "./EgresosTab";
+import LiquidacionTab from "./LiquidacionTab";
+import ContratoTab from "./ContratoTab";
+import { mockLiquidacion } from "../mock/collaboratorData";
+import { mockEgresos } from "../mock/collaboratorData";
+import { mockIngresos } from "../mock/collaboratorData";
+import { mockVacations } from "../mock/collaboratorData";
+import { mockAssistance } from "../mock/collaboratorData";
 
 export default function ProfileTabs() {
   const [active, setActive] = useState("Resumen");
@@ -36,6 +48,12 @@ export default function ProfileTabs() {
 
       {/* Contenido dinámico */}
       {active === "Resumen" && <SummaryTab />}
+      {active === "Asistencias" && <AssistanceTab data={mockAssistance} />}
+      {active === "Vacaciones" && <VacacionesTab data={mockVacations} />}
+      {active === "Ingresos" && <IngresosTab data={mockIngresos} />}
+      {active === "Egresos" && <EgresosTab data={mockEgresos} />}
+      {active === "Liquidación" && <LiquidacionTab data={mockLiquidacion} />}
+      {active === "Contrato" && <ContratoTab />}
     </div>
   );
 }

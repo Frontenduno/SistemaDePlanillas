@@ -60,6 +60,8 @@ export function NewEmployees({ data }: NewEmployeesProps) {
             <Button
               variant="ghost"
               size="icon"
+              aria-label="Anterior"
+              title="Anterior"
               onClick={handlePrevious}
               className="h-8 w-8"
             >
@@ -78,6 +80,8 @@ export function NewEmployees({ data }: NewEmployeesProps) {
             <Button
               variant="ghost"
               size="icon"
+              aria-label="Siguiente"
+              title="Siguiente"
               onClick={handleNext}
               className="h-8 w-8"
             >

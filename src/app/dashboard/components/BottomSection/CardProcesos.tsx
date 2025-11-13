@@ -82,6 +82,8 @@ export function CardProcesos() {
                 <Button
                   variant="ghost"
                   size="icon"
+                  aria-label={`Opciones para ${proceso.titulo}`}
+                  title={`Opciones para ${proceso.titulo}`}
                   className="h-5 w-5 shrink-0"
                 >
                   <MoreVertical className="h-3.5 w-3.5 text-gray-500" />

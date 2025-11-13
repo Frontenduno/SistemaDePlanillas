@@ -1,22 +1,37 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { HiMenu, HiSearch, HiCalendar } from 'react-icons/hi';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import Sidebar from './Sidebar';
+import { useState } from "react";
+import { HiMenu, HiSearch, HiCalendar } from "react-icons/hi";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Sidebar from "./Sidebar";
 
 interface NavbarProps {
   children: React.ReactNode;
   userName?: string;
 }
 
-export default function Navbar({ children, userName = "Francisco Alvarez" }: NavbarProps) {
+export default function Navbar({
+  children,
+  userName = "Francisco Alvarez",
+}: NavbarProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  
+
   const currentDate = new Date();
-  const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+  const monthNames = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
   const month = monthNames[currentDate.getMonth()];
   const year = currentDate.getFullYear();
 
@@ -36,6 +51,8 @@ export default function Navbar({ children, userName = "Francisco Alvarez" }: Nav
                 onClick={handleToggleSidebar}
                 variant="ghost"
                 size="icon"
+                aria-label="Alternar menú lateral"
+                title="Alternar menú"
                 className="text-white cursor-pointer hover:bg-blue-600"
               >
                 <HiMenu className="w-6 h-6" />
@@ -66,11 +83,15 @@ export default function Navbar({ children, userName = "Francisco Alvarez" }: Nav
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
               <span className="text-blue-700 font-bold text-sm">
-                {userName.split(' ').map(n => n[0]).join('')}
+                {userName
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}
               </span>
             </div>
-            <span className="text-sm font-medium hidden sm:block">{userName}</span>
-            
+            <span className="text-sm font-medium hidden sm:block">
+              {userName}
+            </span>
           </div>
         </div>
       </nav>
@@ -79,7 +100,11 @@ export default function Navbar({ children, userName = "Francisco Alvarez" }: Nav
       <Sidebar isOpen={sidebarOpen} />
 
       {/* Main Content - usamos padding-top para evitar crear un "gap" extra y respetar el navbar fijo */}
-      <main className={`transition-all duration-300 pt-[60px] ${sidebarOpen ? 'ml-64' : 'ml-0'}`}>
+      <main
+        className={`transition-all duration-300 pt-[60px] ${
+          sidebarOpen ? "ml-64" : "ml-0"
+        }`}
+      >
         {children}
       </main>
     </>

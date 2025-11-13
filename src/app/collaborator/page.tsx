@@ -212,6 +212,8 @@ export default function CollaboratorPage() {
                     <Button
                       variant="outline"
                       size="icon"
+                      aria-label="Ver colaborador"
+                      title="Ver colaborador"
                       className="border-blue-700 text-blue-700 hover:bg-blue-100"
                     >
                       🔍
