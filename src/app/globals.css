@@ -120,3 +120,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Recharts styling moved from inline styles to global CSS to satisfy no-inline-styles rule */
+.recharts-theme .recharts-wrapper text {
+  font-size: 0.875rem; /* 14px */
+}
+
+.recharts-theme .recharts-tooltip-wrapper .recharts-default-tooltip {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
