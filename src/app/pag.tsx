@@ -119,7 +119,7 @@ const HRDashboard = () => {
                       <div className="h-6 w-6 bg-red-500 rounded flex items-center justify-center">
                         <CalendarDays className="h-4 w-4 text-white" />
                       </div>
-                      <span className="font-medium">Julio '23</span>
+                      <span className="font-medium">Julio &apos;23</span>
                     </div>
                     <ChevronDown className="h-4 w-4" />
                   </div>
@@ -129,7 +129,7 @@ const HRDashboard = () => {
                       <div className="h-6 w-6 bg-green-500 rounded flex items-center justify-center">
                         <CalendarDays className="h-4 w-4 text-white" />
                       </div>
-                      <span className="font-medium">Agosto '23</span>
+                      <span className="font-medium">Agosto &apos;23</span>
                     </div>
                     <ChevronDown className="h-4 w-4" />
                   </div>
