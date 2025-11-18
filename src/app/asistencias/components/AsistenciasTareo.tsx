@@ -1,34 +1,44 @@
 "use client";
 
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
+import { Button } from "@/components/ui/button"; // Agregado para el botón de volver
 import {
-  SelectValue,
-  SelectTrigger,
+  Select,
   SelectContent,
   SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { empleadosTareo } from "../data/asistenciasData";
 
-export default function AsistenciasPage() {
-  const router = useRouter();
+interface Props {
+  onBack: () => void; // Volver al listado
+  onEdit: (codigo: string) => void; // Ir a editar
+}
+
+export default function AsistenciasTareo({ onBack, onEdit }: Props) {
   const [periodo, setPeriodo] = useState("Marzo");
   const [año, setAño] = useState("2022");
   const [categoria, setCategoria] = useState("Obrero");
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-blue-900">
-        Asistencias (Tareo): J & P Perifericos
-      </h1>
+      {/* Header con Botón de Volver */}
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-blue-900">
+          Asistencias (Tareo): J & P Perifericos
+        </h1>
+        <Button variant="outline" onClick={onBack}>
+          Volver al Listado
+        </Button>
+      </div>
 
-      {/* Card principal con filtros y leyenda */}
       <Card className="p-4 bg-gray-50">
         <div className="grid grid-cols-[1fr_200px] gap-8">
-          {/* Columna de filtros - lado izquierdo */}
           <div className="grid grid-cols-3 gap-x-8 gap-y-4">
+            {/* Filtros originales */}
             <div>
               <label className="block text-sm mb-1">Código:</label>
               <Input type="text" placeholder="Código" className="bg-white" />
@@ -78,7 +88,6 @@ export default function AsistenciasPage() {
             </div>
           </div>
 
-          {/* Leyenda - lado derecho */}
           <div className="border rounded-md p-2 bg-white h-fit">
             <div className="border-b pb-2 mb-2">
               <div className="text-center font-medium">Leyenda</div>
@@ -101,7 +110,6 @@ export default function AsistenciasPage() {
         </div>
       </Card>
 
-      {/* Tabla de Asistencias */}
       <Card className="p-4">
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -118,38 +126,32 @@ export default function AsistenciasPage() {
               </tr>
             </thead>
             <tbody>
-              {mockData.map((empleado) => (
+              {empleadosTareo.map((empleado) => (
                 <tr key={empleado.codigo} className="border-t">
                   <td className="p-2">{empleado.codigo}</td>
                   <td className="p-2">{empleado.nombre}</td>
                   {empleado.asistencias.map((asistencia, index) => (
                     <td key={index} className="p-2">
                       <div
-                        className={`
-                        rounded-full px-3 py-1 text-center text-sm
+                        className={`rounded-full px-3 py-1 text-center text-sm 
                         ${
                           asistencia.estado === "asistió"
                             ? "bg-green-200"
                             : asistencia.estado === "tardanza"
                             ? "bg-yellow-200"
                             : "bg-red-200"
-                        }
-                      `}
+                        }`}
                       >
                         8 horas
                       </div>
                     </td>
                   ))}
                   <td className="p-2">
+                    {/* AQUÍ EL CAMBIO: Usamos onEdit en lugar de router.push */}
                     <button
                       className="text-gray-600 hover:text-gray-800"
                       title="Editar asistencia"
-                      aria-label="Editar asistencia"
-                      onClick={() =>
-                        router.push(
-                          `/asistencias/edi?codigo=${empleado.codigo}`
-                        )
-                      }
+                      onClick={() => onEdit(empleado.codigo)}
                     >
                       <svg
                         className="w-5 h-5"
@@ -175,96 +177,3 @@ export default function AsistenciasPage() {
     </div>
   );
 }
-
-// Datos de ejemplo
-const mockData = [
-  {
-    codigo: "4236182",
-    nombre: "Espinoza Alache Geraldin Alejandra",
-    asistencias: [
-      { estado: "asistió" },
-      { estado: "no asistió" },
-      { estado: "asistió" },
-      { estado: "asistió" },
-      { estado: "asistió" },
-    ],
-  },
-  {
-    codigo: "4236183",
-    nombre: "Carrasco Aguilar Jonathan Luis",
-    asistencias: [
-      { estado: "asistió" },
-      { estado: "asistió" },
-      { estado: "asistió" },
-      { estado: "asistió" },
-      { estado: "no asistió" },
-    ],
-  },
-  {
-    codigo: "4236184",
-    nombre: "Cruz Ramos Miguel Angel",
-    asistencias: [
-      { estado: "asistió" },
-      { estado: "asistió" },
-      { estado: "asistió" },
-      { estado: "asistió" },
-      { estado: "asistió" },
-    ],
-  },
-  {
-    codigo: "4236185",
-    nombre: "Dominguez Suarez Jean Jairo",
-    asistencias: [
-      { estado: "no asistió" },
-      { estado: "asistió" },
-      { estado: "tardanza" },
-      { estado: "asistió" },
-      { estado: "asistió" },
-    ],
-  },
-  {
-    codigo: "4236186",
-    nombre: "Esteban Vilchez Michel Eduardo",
-    asistencias: [
-      { estado: "asistió" },
-      { estado: "asistió" },
-      { estado: "asistió" },
-      { estado: "no asistió" },
-      { estado: "asistió" },
-    ],
-  },
-  {
-    codigo: "4236187",
-    nombre: "Fasando García Royer Raul",
-    asistencias: [
-      { estado: "asistió" },
-      { estado: "tardanza" },
-      { estado: "asistió" },
-      { estado: "asistió" },
-      { estado: "asistió" },
-    ],
-  },
-  {
-    codigo: "4236188",
-    nombre: "Guerrero García Ricky Jampier",
-    asistencias: [
-      { estado: "asistió" },
-      { estado: "asistió" },
-      { estado: "asistió" },
-      { estado: "asistió" },
-      { estado: "no asistió" },
-    ],
-  },
-  {
-    codigo: "4236189",
-    nombre: "Ipanaque Alvarez Ruby Judith",
-    asistencias: [
-      { estado: "no asistió" },
-      { estado: "asistió" },
-      { estado: "tardanza" },
-      { estado: "asistió" },
-      { estado: "asistió" },
-    ],
-  },
-  // Agrega más empleados aquí...
-];

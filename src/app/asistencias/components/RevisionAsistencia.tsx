@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,9 +10,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { empleadosResumen } from "../data/asistenciasData"; // Importamos los datos
 
-export default function RevisionAsistencia() {
-  const router = useRouter();
+interface Props {
+  onNavigateToRevi: () => void; // Prop para navegar
+}
+
+export default function RevisionAsistencia({ onNavigateToRevi }: Props) {
   const [filtros, setFiltros] = useState({
     empresa: "Fábrica XYZ S.A.C.",
     periodo: "Marzo",
@@ -23,84 +26,10 @@ export default function RevisionAsistencia() {
     dias: 30,
   });
 
-  const empleados = [
-    {
-      codigo: "42015030",
-      nombre: "Martínez Apolinario, Milagros Del Rocio",
-      basico: 850.0,
-      diasL: 30,
-      diasT: 15,
-      faltas: 0,
-      hPerm: "1h",
-      dPerm: 2,
-      tardanza: "1h",
-      hTrab: 120,
-      he25: 1,
-      he35: 1,
-    },
-    {
-      codigo: "9943970",
-      nombre: "Huaman Peralta, Manuel Carlos",
-      basico: 1000.0,
-      diasL: 30,
-      diasT: 30,
-      faltas: 0,
-      hPerm: "1h",
-      dPerm: 2,
-      tardanza: "1h",
-      hTrab: 240,
-      he25: 1,
-      he35: 1,
-    },
-    {
-      codigo: "10513139",
-      nombre: "Duran Tolentino, Alfonso",
-      basico: 850.0,
-      diasL: 30,
-      diasT: 15,
-      faltas: 0,
-      hPerm: "0h",
-      dPerm: 7,
-      tardanza: "2h",
-      hTrab: 240,
-      he25: 2,
-      he35: 1,
-    },
-    {
-      codigo: "10771709",
-      nombre: "Eguavel Ortiz, Dominga Enma",
-      basico: 1000.0,
-      diasL: 30,
-      diasT: 15,
-      faltas: 0,
-      hPerm: "2h",
-      dPerm: 3,
-      tardanza: "4h",
-      hTrab: 240,
-      he25: 2,
-      he35: 1,
-    },
-    {
-      codigo: "28291453",
-      nombre: "Acosta Jaime, Johnny",
-      basico: 850.0,
-      diasL: 30,
-      diasT: 20,
-      faltas: 0,
-      hPerm: "3h",
-      dPerm: 0,
-      tardanza: "0h",
-      hTrab: 232,
-      he25: 2,
-      he35: 1,
-    },
-  ];
-
   return (
     <div className="flex flex-col h-screen p-2 space-y-2">
       {/* PANEL SUPERIOR DE FILTROS */}
       <div className="bg-gray-100 border rounded-xl p-2 text-xs shadow-sm">
-        {/* FILA SUPERIOR */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mb-1">
           <div className="flex items-center gap-2">
             <label className="font-semibold">Periodo:</label>
@@ -114,7 +43,6 @@ export default function RevisionAsistencia() {
               </SelectContent>
             </Select>
           </div>
-
           <div className="flex items-center gap-2">
             <label className="font-semibold">Año activo:</label>
             <Select defaultValue={filtros.anio}>
@@ -127,7 +55,6 @@ export default function RevisionAsistencia() {
               </SelectContent>
             </Select>
           </div>
-
           <div className="flex items-center gap-2">
             <label className="font-semibold whitespace-nowrap">
               Categoría Ocupacional:
@@ -142,7 +69,6 @@ export default function RevisionAsistencia() {
               </SelectContent>
             </Select>
           </div>
-
           <div className="flex items-center gap-2">
             <label className="font-semibold">Periodicidad:</label>
             <Select defaultValue={filtros.periodicidad}>
@@ -157,12 +83,8 @@ export default function RevisionAsistencia() {
           </div>
         </div>
 
-        {/* NUEVA LÍNEA CON “FILTROS BÁSICOS” Y “MODIFICACIÓN” */}
         <div className="relative flex items-center justify-between text-gray-600 text-sm my-3">
-          {/* Línea completa */}
           <div className="absolute inset-x-0 top-1/2 border-t border-gray-400"></div>
-
-          {/* Textos sobre la línea */}
           <span className="bg-gray-100 px-2 font-medium z-10">
             Filtros básicos
           </span>
@@ -171,18 +93,15 @@ export default function RevisionAsistencia() {
           </span>
         </div>
 
-        {/* FILA INFERIOR */}
         <div className="grid grid-cols-1 md:grid-cols-5 items-center gap-4">
           <div className="flex items-center gap-2">
             <label className="font-semibold w-16">Código:</label>
             <Input placeholder="Código" className="h-8 w-full bg-white" />
           </div>
-
           <div className="flex items-center gap-2">
             <label className="font-semibold w-16">Nombre:</label>
             <Input placeholder="Nombre" className="h-8 w-full bg-white" />
           </div>
-
           <div className="flex items-center gap-2">
             <label className="font-semibold whitespace-nowrap">
               Días Trabajados:
@@ -197,9 +116,7 @@ export default function RevisionAsistencia() {
               Aplicar
             </Button>
           </div>
-
           <div></div>
-
           <div className="flex justify-end">
             <Button className="bg-blue-800 hover:bg-blue-900 text-white h-8 px-4 text-xs">
               Guardar
@@ -208,7 +125,6 @@ export default function RevisionAsistencia() {
         </div>
       </div>
 
-      {/* SECCIÓN EMPRESA */}
       <div className="flex items-center gap-2">
         <label className="font-semibold text-sm">Empresa:</label>
         <Select defaultValue={filtros.empresa}>
@@ -226,11 +142,9 @@ export default function RevisionAsistencia() {
         </Select>
       </div>
 
-      {/* TABLA DE ASISTENCIAS */}
       <div className="border rounded-xl overflow-hidden flex-1 overflow-y-auto">
         <table className="min-w-full border-collapse text-sm">
           <thead className="bg-white text-gray-700">
-            {/* Fila 1: Agrupación */}
             <tr>
               <th
                 colSpan={4}
@@ -251,8 +165,6 @@ export default function RevisionAsistencia() {
                 Horas extras
               </th>
             </tr>
-
-            {/* Fila 2: Encabezados individuales */}
             <tr>
               <th className="border p-2">Código</th>
               <th className="border p-2">Apellidos y Nombres</th>
@@ -268,9 +180,8 @@ export default function RevisionAsistencia() {
               <th className="border p-2">H.E. 35%</th>
             </tr>
           </thead>
-
           <tbody>
-            {empleados.map((e, i) => (
+            {empleadosResumen.map((e, i) => (
               <tr key={i} className="text-center hover:bg-gray-50">
                 <td className="border p-2">{e.codigo}</td>
                 <td className="border p-2 text-left">{e.nombre}</td>
@@ -290,7 +201,6 @@ export default function RevisionAsistencia() {
         </table>
       </div>
 
-      {/* PAGINACIÓN */}
       <div className="flex justify-between items-center pt-2 border-t border-gray-200">
         <span className="text-sm text-gray-500">
           del 1 al 10 de 20 resultados
@@ -309,10 +219,8 @@ export default function RevisionAsistencia() {
             {">"}
           </Button>
         </div>
-        <Button
-          className="bg-blue-700 text-white"
-          onClick={() => router.push("/asistencias/revi")}
-        >
+        {/* AQUÍ EL CAMBIO: Usamos el prop onNavigateToRevi */}
+        <Button className="bg-blue-700 text-white" onClick={onNavigateToRevi}>
           Revisión de Asistencias
         </Button>
       </div>

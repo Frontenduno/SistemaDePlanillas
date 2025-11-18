@@ -29,7 +29,7 @@ export default function Sidebar({ isOpen }: SidebarProps) {
     {
       icon: FaCalendarCheck,
       label: "Ctrl. de Asistencias",
-      href: "/asistencias/pri",
+      href: "/asistencias",
     },
     { icon: PiBagSimpleFill, label: "Empresas", href: "/empresas" },
   ];

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -14,9 +13,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
 import Image from "next/image";
+import { colaboradorDetalle } from "../data/asistenciasData"; // Importamos los datos
 
-export default function EdicionColaborador() {
-  const router = useRouter();
+interface Props {
+  codigo: string | null; // Para saber a quién editamos (aunque usaremos el mock)
+  onBack: () => void; // Para cancelar/guardar y volver
+}
+
+export default function EdicionColaborador({ codigo, onBack }: Props) {
   const [filtros, setFiltros] = useState({
     codigo: "",
     nombres: "",
@@ -26,23 +30,14 @@ export default function EdicionColaborador() {
     categoria: "Obrero",
   });
 
-  // Datos de ejemplo del colaborador
-  const colaborador = {
-    codigo: "4236182",
-    nombreCompleto: "Espinoza Alache Alejandra Melissa",
-    edad: "32 años",
-    cargo: "Empleada",
-    horasTotales: "48 horas",
-    foto: "/path/to/photo.jpg", // Reemplazar con la ruta correcta de la foto
-  };
+  // Usamos los datos importados
+  const colaborador = colaboradorDetalle;
 
-  // Horarios por defecto
   const horarioInicial = {
     entrada: "8:00 am",
     salida: "6:00 pm",
     extras: "00:00 pm",
   };
-
   const diasSemana = [
     "Lunes",
     "Martes",
@@ -55,15 +50,19 @@ export default function EdicionColaborador() {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-blue-900">
-        Asistencias (Tareo): J & P Perifericos
-      </h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-blue-900">
+          Asistencias (Tareo): J & P Perifericos
+        </h1>
+        <Button variant="outline" onClick={onBack}>
+          Cancelar
+        </Button>
+      </div>
 
-      {/* Card principal con filtros y leyenda */}
       <Card className="p-4 bg-gray-50">
         <div className="grid grid-cols-[1fr_200px] gap-8">
-          {/* Columna de filtros - lado izquierdo */}
           <div className="grid grid-cols-3 gap-x-8 gap-y-4">
+            {/* Filtros copiados tal cual */}
             <div>
               <label className="block text-sm mb-1">Código:</label>
               <Input
@@ -152,7 +151,6 @@ export default function EdicionColaborador() {
             </div>
           </div>
 
-          {/* Leyenda - lado derecho */}
           <div className="border rounded-md p-2 bg-white h-fit">
             <div className="border-b pb-2 mb-2">
               <div className="text-center font-medium">Leyenda</div>
@@ -175,20 +173,22 @@ export default function EdicionColaborador() {
         </div>
       </Card>
 
-      {/* Información del Colaborador */}
       <Card className="p-6 bg-gray-50">
         <h2 className="text-xl font-bold text-blue-900 mb-4">
           Edición de colaborador(a)
         </h2>
         <div className="flex items-start gap-6">
           <Avatar className="w-24 h-24">
-            <Image
-              src={colaborador.foto}
-              alt="Foto del colaborador"
-              width={96}
-              height={96}
-              className="rounded-full object-cover"
-            />
+            {/* Asumimos que tienes next/image configurado o la imagen existe */}
+            {colaborador.foto && (
+              <Image
+                src={colaborador.foto}
+                alt="Foto"
+                width={96}
+                height={96}
+                className="rounded-full object-cover"
+              />
+            )}
           </Avatar>
           <div className="flex-1 grid grid-cols-5 gap-4">
             <div>
@@ -225,7 +225,6 @@ export default function EdicionColaborador() {
         </div>
       </Card>
 
-      {/* Horarios Semanales */}
       <Card className="p-6 bg-gray-50">
         <div className="grid grid-cols-8 gap-4">
           <div className="font-medium">
@@ -234,7 +233,6 @@ export default function EdicionColaborador() {
             <div className="h-12 flex items-center">Hora de salida</div>
             <div className="h-12 flex items-center">Horas extras</div>
           </div>
-
           {diasSemana.map((dia) => (
             <div key={dia} className="text-center">
               <div className="h-12 flex items-center justify-center font-medium">
@@ -256,7 +254,7 @@ export default function EdicionColaborador() {
         <div className="flex justify-end mt-6">
           <Button
             className="bg-blue-500 text-white hover:bg-blue-600"
-            onClick={() => router.push("/asistencias/revi")}
+            onClick={onBack}
           >
             Guardar
           </Button>
