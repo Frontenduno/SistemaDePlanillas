@@ -22,16 +22,12 @@ export default function Sidebar({ isOpen }: SidebarProps) {
   const pathname = usePathname();
 
   const menuItems = [
-    { icon: MdDashboard, label: "Panel de Control", href: "/dashboard" },
-    { icon: MdPeople, label: "Colaboradores", href: "/collaborator" },
-    { icon: MdDescription, label: "Registro Personal", href: "/reportes" },
-    { icon: FaLocationArrow, label: "Vacaciones", href: "/vacaciones" },
-    {
-      icon: FaCalendarCheck,
-      label: "Ctrl. de Asistencias",
-      href: "/asistencias",
-    },
-    { icon: PiBagSimpleFill, label: "Empresas", href: "/empresas" },
+    { icon: MdDashboard, label: 'Panel de Control', href: '/dashboard' },
+    { icon: MdPeople, label: 'Colaboradores', href: '/collaborator' },
+    { icon: MdDescription, label: 'Registro Personal', href: '/registro' },
+    { icon: FaLocationArrow, label: 'Vacaciones', href: '/vacaciones' },
+    { icon: FaCalendarCheck, label: 'Ctrl. de Asistencias', href: '/asistencias' },
+    { icon: PiBagSimpleFill, label: 'Empresas', href: '/empresas' },
   ];
 
   return (
