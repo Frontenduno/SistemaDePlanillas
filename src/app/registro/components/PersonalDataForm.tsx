@@ -2,6 +2,13 @@
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import DatePicker from "@/components/DatePicker";
+import { Field } from "./common/Field";
+import { PRIMARY_COLOR } from "../constants";
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { personalSchema, PersonalSchemaType } from '../validation';
 
 export interface PersonalFormState {
   nombre: string;
@@ -23,32 +30,49 @@ export interface PersonalFormState {
 interface PersonalDataFormProps {
   form: PersonalFormState;
   onChange: (key: keyof PersonalFormState, value: string) => void;
-  isValid: boolean;
   cargo: string;
   onCargoChange: (value: string) => void;
   onNext: () => void;
 }
 
-export function PersonalDataForm({ form, onChange, isValid, cargo, onCargoChange, onNext }: PersonalDataFormProps) {
+export function PersonalDataForm({ form, onChange, cargo, onCargoChange, onNext }: PersonalDataFormProps) {
+  const { register, setValue, formState: { errors, isValid }, watch } = useForm<PersonalSchemaType>({
+    resolver: zodResolver(personalSchema),
+    mode: 'onChange',
+    defaultValues: form
+  });
+
+  // Propagate internal RHF values to parent state so step 2 can consume them
+  const values = watch();
+  useEffect(() => {
+    for (const [k, v] of Object.entries(values)) {
+      const nextVal = (v as string) || '';
+      const key = k as keyof PersonalFormState;
+      if (form[key] !== nextVal) {
+        onChange(key, nextVal);
+      }
+    }
+  }, [values, form, onChange]);
+
   return (
     <div>
-      <h2 className="text-3xl font-bold text-blue-600 mb-8">Nuevo Trabajador</h2>
+      <h2 className="text-3xl font-bold mb-8" style={{color: PRIMARY_COLOR}}>Nuevo Trabajador</h2>
       {/* Fila 1 */}
       <div className="grid grid-cols-4 gap-6 mb-6">
-        <Field label="Nombre" required>
-          <Input value={form.nombre} onChange={e => onChange("nombre", e.target.value)} className="bg-white h-10" />
+        <Field label="Nombre" required error={errors.nombre?.message}>
+          <Input className="bg-white h-10" {...register('nombre')} />
         </Field>
-        <Field label="Apellido" required>
-          <Input value={form.apellido} onChange={e => onChange("apellido", e.target.value)} className="bg-white h-10" />
+        <Field label="Apellido" required error={errors.apellido?.message}>
+          <Input className="bg-white h-10" {...register('apellido')} />
         </Field>
-        <Field label="Segundo Apellido" required>
-          <Input value={form.segundoApellido} onChange={e => onChange("segundoApellido", e.target.value)} className="bg-white h-10" />
+        <Field label="Segundo Apellido" required error={errors.segundoApellido?.message}>
+          <Input className="bg-white h-10" {...register('segundoApellido')} />
         </Field>
       </div>
       {/* Fila 2 */}
       <div className="grid grid-cols-4 gap-6 mb-6">
-        <Field label="Tipo de Documento" required>
-          <Select value={form.tipoDocumento} onValueChange={v => onChange("tipoDocumento", v)}>
+        <Field label="Tipo de Documento" required error={errors.tipoDocumento?.message}>
+          <Select value={values.tipoDocumento} onValueChange={v => setValue('tipoDocumento', v, { shouldValidate: true })}>
             <SelectTrigger className="bg-white h-10">
               <SelectValue placeholder="DNI" />
             </SelectTrigger>
@@ -58,12 +82,12 @@ export function PersonalDataForm({ form, onChange, isValid, cargo, onCargoChange
             </SelectContent>
           </Select>
         </Field>
-        <Field label="N° de Documento" required>
-          <Input value={form.numeroDocumento} onChange={e => onChange("numeroDocumento", e.target.value)} className="bg-white h-10" />
+        <Field label="N° de Documento" required error={errors.numeroDocumento?.message}>
+          <Input className="bg-white h-10" {...register('numeroDocumento')} />
         </Field>
         <div></div>
-        <Field label="Género" required>
-          <Select value={form.genero} onValueChange={v => onChange("genero", v)}>
+        <Field label="Género" required error={errors.genero?.message}>
+          <Select value={values.genero} onValueChange={v => setValue('genero', v, { shouldValidate: true })}>
             <SelectTrigger className="bg-white h-10">
               <SelectValue placeholder="Seleccione Genero" />
             </SelectTrigger>
@@ -76,8 +100,8 @@ export function PersonalDataForm({ form, onChange, isValid, cargo, onCargoChange
       </div>
       {/* Fila 3 */}
       <div className="grid grid-cols-4 gap-6 mb-6">
-        <Field label="Nacionalidad" required>
-          <Select value={form.nacionalidad} onValueChange={v => onChange("nacionalidad", v)}>
+        <Field label="Nacionalidad" required error={errors.nacionalidad?.message}>
+          <Select value={values.nacionalidad} onValueChange={v => setValue('nacionalidad', v, { shouldValidate: true })}>
             <SelectTrigger className="bg-white h-10">
               <SelectValue placeholder="Perú" />
             </SelectTrigger>
@@ -87,12 +111,15 @@ export function PersonalDataForm({ form, onChange, isValid, cargo, onCargoChange
             </SelectContent>
           </Select>
         </Field>
-        <Field label="Fecha de Nacimiento" required>
-          <Input type="date" value={form.fechaNacimiento} onChange={e => onChange("fechaNacimiento", e.target.value)} className="bg-white h-10" />
+        <Field label="Fecha de Nacimiento" required error={errors.fechaNacimiento?.message}>
+          <DatePicker
+            value={values.fechaNacimiento || null}
+            onChange={(iso) => setValue('fechaNacimiento', iso || '', { shouldValidate: true })}
+          />
         </Field>
         <div></div>
-        <Field label="Estado Civil" required>
-          <Select value={form.estadoCivil} onValueChange={v => onChange("estadoCivil", v)}>
+        <Field label="Estado Civil" required error={errors.estadoCivil?.message}>
+          <Select value={values.estadoCivil} onValueChange={v => setValue('estadoCivil', v, { shouldValidate: true })}>
             <SelectTrigger className="bg-white h-10">
               <SelectValue placeholder="Seleccione Estado" />
             </SelectTrigger>
@@ -107,23 +134,23 @@ export function PersonalDataForm({ form, onChange, isValid, cargo, onCargoChange
       </div>
       {/* Fila 4 */}
       <div className="grid grid-cols-4 gap-6 mb-6">
-        <Field label="Email" required>
-          <Input type="email" value={form.email} onChange={e => onChange("email", e.target.value)} className="bg-white h-10" />
+        <Field label="Email" required error={errors.email?.message}>
+          <Input type="email" className="bg-white h-10" {...register('email')} />
         </Field>
-        <Field label="Dirección" required>
-          <Input value={form.direccion} onChange={e => onChange("direccion", e.target.value)} className="bg-white h-10" />
+        <Field label="Dirección" required error={errors.direccion?.message}>
+          <Input className="bg-white h-10" {...register('direccion')} />
         </Field>
-        <Field label="N° de Teléfono" required>
-          <Input type="tel" value={form.telefono} onChange={e => onChange("telefono", e.target.value)} className="bg-white h-10" />
+        <Field label="N° de Teléfono" required error={errors.telefono?.message}>
+          <Input type="tel" className="bg-white h-10" {...register('telefono')} />
         </Field>
       </div>
       {/* Fila 5 */}
       <div className="grid grid-cols-4 gap-6 mb-6">
-        <Field label="Nivel Educativo" required>
-          <Input value={form.nivelEducativo} onChange={e => onChange("nivelEducativo", e.target.value)} className="bg-white h-10" />
+        <Field label="Nivel Educativo" required error={errors.nivelEducativo?.message}>
+          <Input className="bg-white h-10" {...register('nivelEducativo')} />
         </Field>
-        <Field label="Profesión" required>
-          <Select value={form.profesion} onValueChange={v => onChange("profesion", v)}>
+        <Field label="Profesión" required error={errors.profesion?.message}>
+          <Select value={values.profesion} onValueChange={v => setValue('profesion', v, { shouldValidate: true })}>
             <SelectTrigger className="bg-white h-10">
               <SelectValue placeholder="Seleccione" />
             </SelectTrigger>
@@ -193,24 +220,12 @@ export function PersonalDataForm({ form, onChange, isValid, cargo, onCargoChange
       <div className="flex justify-end mt-8">
         <Button
           disabled={!isValid}
-          className={`px-12 h-10 text-white ${isValid ? "bg-cyan-500 hover:bg-cyan-600" : "bg-gray-300 cursor-not-allowed"}`}
+          className={`px-12 h-10 text-white ${isValid ? "bg-[#150AB4] hover:bg-[#0F088A]" : "bg-gray-300 cursor-not-allowed"}`}
           onClick={onNext}
         >
           Siguiente
         </Button>
       </div>
-    </div>
-  );
-}
-
-function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
-  return (
-    <div>
-      <label className="block text-sm font-medium text-gray-700 mb-2">
-        {label}
-        {required && <span className="text-red-500">*</span>}
-      </label>
-      {children}
     </div>
   );
 }

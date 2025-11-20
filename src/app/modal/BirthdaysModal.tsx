@@ -1,6 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import type { Cumpleanos } from '@/lib/dashboard';
@@ -39,8 +40,9 @@ export function BirthdaysModal({ isOpen, onClose, data }: BirthdaysModalProps) {
               <X className="h-4 w-4" />
             </Button>
           </CardHeader>
-          <CardContent className="max-h-[60vh] overflow-y-auto">
-            <div className="grid grid-cols-3 gap-8 p-4">
+          <CardContent className="p-0">
+            <ScrollArea className="h-[60vh] w-full">
+              <div className="grid grid-cols-3 gap-8 p-4">
               {data.map((persona, idx) => (
                 <div key={idx} className="text-center">
                   <Avatar className="h-20 w-20 mx-auto mb-1">
@@ -55,7 +57,8 @@ export function BirthdaysModal({ isOpen, onClose, data }: BirthdaysModalProps) {
                   <p className="text-md text-gray-500">{persona.fecha}</p>
                 </div>
               ))}
-            </div>
+              </div>
+            </ScrollArea>
           </CardContent>
         </Card>
       </div>

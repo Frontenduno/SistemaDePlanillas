@@ -22,7 +22,7 @@ export function GraphicPanel({
   gastosData = [], 
   horasData = [], 
   liquidacionesData = [],
-  title = "GRAFICOS" 
+  title = "GRÁFICOS" 
 }: GraphicPanelProps) {
   const [activeChart, setActiveChart] = useState<ChartType>('trabajadores');
 

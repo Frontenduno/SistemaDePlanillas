@@ -11,7 +11,7 @@ export function UserCard({ data }: UserCardProps) {
   const iniciales = `${data.nombre[0]}${data.apellido[0]}`;
 
   return (
-    <Card className="col-start-1 col-end-2 row-start-1 row-end-2 bg-[#DFDFDF]">
+    <Card className="col-start-1 col-end-2 row-start-1 row-end-2 bg-[#DFDFDF] py-0">
       <CardContent className="h-full flex items-center justify-center px-4">
         <div className="flex flex-row items-center gap-4">
           <Avatar className="w-36 h-44 rounded-[50%]">

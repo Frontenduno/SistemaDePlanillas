@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import type { Trabajador } from '@/lib/dashboard';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Users } from 'lucide-react';
 import { useState } from 'react';
 
 interface NewEmployeesProps {
@@ -32,10 +32,15 @@ export function NewEmployees({ data }: NewEmployeesProps) {
 
   return (
     <Card className="col-start-1 col-end-2 row-start-2 row-end-3 bg-[#DFDFDF]">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">
-          Trabajadores nuevos
-        </CardTitle>
+      <CardHeader className="pb-2">
+        <div className="flex items-center gap-2">
+          <div className="h-10 w-10 bg-green-500 rounded-full flex items-center justify-center">
+            <Users className="h-7 w-7 text-white" />
+          </div>
+          <CardTitle className="text-2xl font-bold flex-1">
+            TRABAJADORES NUEVOS
+          </CardTitle>
+        </div>
       </CardHeader>
       <CardContent className="relative">
         <div className="flex flex-row px-4 justify-between">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { RegistroHeader, RegistroLayout, PersonalDataForm, WorkDataForm, BackButton } from './';
 
 export default function RegistroPage() {
@@ -13,20 +13,9 @@ export default function RegistroPage() {
     setForm(prev => ({ ...prev, [key]: value }));
   };
 
-  // Validación simple: todos los campos requeridos llenos y email con '@'
-  const isValid = useMemo(() => {
-    const requiredKeys: (keyof typeof form)[] = [
-      'nombre','apellido','segundoApellido','tipoDocumento','numeroDocumento','genero','estadoCivil','nacionalidad','fechaNacimiento','email','direccion','telefono','nivelEducativo','profesion'
-    ];
-    for (const k of requiredKeys) {
-      if (!form[k].trim()) return false;
-    }
-    if (!form.email.includes('@')) return false;
-    return true;
-  }, [form]);
 
   return (
-    <div className="min-h-screen bg-white p-2">
+    <div className="bg-white p-2">
       <div className="w-full px-4">
         <RegistroHeader step={currentStep} />
         <RegistroLayout>
@@ -34,13 +23,12 @@ export default function RegistroPage() {
             <PersonalDataForm
               form={form}
               onChange={handleChange}
-              isValid={isValid}
               cargo={cargo}
               onCargoChange={setCargo}
-              onNext={() => isValid && setCurrentStep(2)}
+              onNext={() => setCurrentStep(2)}
             />
           ) : (
-            <WorkDataForm cargo={cargo} onBack={() => setCurrentStep(1)} />
+            <WorkDataForm cargo={cargo} onBack={() => setCurrentStep(1)} personalForm={form} />
           )}
         </RegistroLayout>
         <BackButton step={currentStep} onBack={() => setCurrentStep(1)} />
