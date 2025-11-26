@@ -16,7 +16,7 @@ export function WorkDataForm({ cargo, onBack, personalForm }: WorkDataFormProps)
     case 'empleador':
       return <EmpleadorForm onBack={onBack} personalForm={personalForm} cargo={cargo} />;
     case 'ejecutivo':
-      return <EjecutivoForm onBack={onBack} cargo={cargo} />;
+      return <EjecutivoForm onBack={onBack} personalForm={personalForm} cargo={cargo} />;
     case 'obrero':
       return <ObreroForm onBack={onBack} cargo={cargo} />;
     default:

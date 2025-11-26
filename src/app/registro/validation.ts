@@ -1,5 +1,25 @@
 import { z } from 'zod';
 
+// Schema para familiar en asignación familiar
+export const familiarSchema = z.object({
+  dni: z.string().min(1, 'DNI requerido'),
+  nombre: z.string().min(1, 'Nombre requerido'),
+  apellidoP: z.string().min(1, 'Apellido paterno requerido'),
+  apellidoM: z.string().min(1, 'Apellido materno requerido'),
+});
+
+export type FamiliarSchemaType = z.infer<typeof familiarSchema>;
+
+// Función para validar array de familiares
+export const validateFamiliares = (familiares: FamiliarSchemaType[]): boolean => {
+  return familiares.every(f => 
+    f.dni.trim() !== '' && 
+    f.nombre.trim() !== '' && 
+    f.apellidoP.trim() !== '' && 
+    f.apellidoM.trim() !== ''
+  );
+};
+
 // Personal data form schema
 export const personalSchema = z.object({
   nombre: z.string().min(1, 'Nombre requerido'),
@@ -56,11 +76,28 @@ export const empleadorSchema = z.object({
 
 export type EmpleadorSchemaType = z.infer<typeof empleadorSchema>;
 
-// Ejecutivo form schema (simplified sample fields)
+// Ejecutivo form schema
 export const ejecutivoSchema = z.object({
-  empresa: z.string().min(1, 'Empresa requerida'),
-  ruc: z.string().min(1, 'RUC requerido'),
-  cargo: z.string().min(1, 'Cargo requerido'),
+  nombre: z.string().optional(),
+  apellidoPaterno: z.string().optional(),
+  apellidoMaterno: z.string().optional(),
+  numeroDocumento: z.string().optional(),
+  tipoDocumento: z.string().optional(),
+  fechaVinculacion: z.string().optional(),
+  fechaRetiro: z.string().optional(),
+  puesto: z.string().min(1, 'Puesto requerido'),
+  departamento: z.string().min(1, 'Departamento requerido'),
+  nivelJerarquico: z.string().min(1, 'Nivel jerárquico requerido'),
+  supervisorDirecto: z.string().min(1, 'Supervisor requerido'),
+  proyectosEstrategicos: z.string().min(1, 'Proyectos estratégicos requerido'),
+  jornadaLaboral: z.string().min(1, 'Jornada laboral requerida'),
+  terminoContrato: z.string().min(1, 'Término de contrato requerido'),
+  tipoContrato: z.string().min(1, 'Tipo de contrato requerido'),
+  banco: z.string().min(1, 'Banco requerido'),
+  numeroCuenta: z.string().min(1, 'Número de cuenta requerido'),
+  afiliacion: z.string().min(1, 'Afiliación requerida'),
+  regimenPensionario: z.string().min(1, 'Régimen pensionario requerido'),
+  cuspp: z.string().min(1, 'CUSPP requerido'),
 });
 export type EjecutivoSchemaType = z.infer<typeof ejecutivoSchema>;
 

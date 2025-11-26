@@ -8,11 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Field } from "./common/Field";
 import { PRIMARY_COLOR } from "../constants";
 import type { PersonalFormState } from './PersonalDataForm';
-import AsignacionFamiliar from "./AsignacionFamiliar";
+import AsignacionFamiliar, { type Familiar } from "./AsignacionFamiliar";
 import IdentificacionBasica from "./IdentificacionBasica";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { empleadorSchema, EmpleadorSchemaType } from '../validation';
+import { empleadorSchema, EmpleadorSchemaType, validateFamiliares } from '../validation';
 
 interface EmpleadorFormProps {
   onBack: () => void;
@@ -60,12 +60,12 @@ export function EmpleadorForm({ onBack, personalForm, cargo }: EmpleadorFormProp
 
   const values = watch();
   const [asignacionFamiliar, setAsignacionFamiliar] = useState(false);
-  const [familiares, setFamiliares] = useState<Array<{dni:string; nombre:string; apellidoP:string; apellidoM:string}>>([
+  const [familiares, setFamiliares] = useState<Familiar[]>([
     { dni: "", nombre: "", apellidoP: "", apellidoM: "" },
   ]);
 
   const addFamiliar = () => setFamiliares(prev => [...prev, { dni: '', nombre: '', apellidoP: '', apellidoM: '' }]);
-  const updateFamiliar = (index: number, key: keyof (typeof familiares)[0], value: string) => {
+  const updateFamiliar = (index: number, key: keyof Familiar, value: string) => {
     setFamiliares(prev => {
       const next = [...prev];
       next[index] = { ...next[index], [key]: value };
@@ -73,6 +73,10 @@ export function EmpleadorForm({ onBack, personalForm, cargo }: EmpleadorFormProp
     });
   };
   const removeFamiliar = (index: number) => setFamiliares(prev => prev.filter((_, i) => i !== index));
+
+  // Validar familiares cuando asignación familiar está activa
+  const familiaresValidos = !asignacionFamiliar || validateFamiliares(familiares);
+  const canSubmit = isValid && familiaresValidos;
 
   const onSubmit = (data: EmpleadorSchemaType) => {
     // Merge familiares info (not in schema) and log; real impl could POST
@@ -339,13 +343,14 @@ export function EmpleadorForm({ onBack, personalForm, cargo }: EmpleadorFormProp
         addFamiliar={addFamiliar}
         updateFamiliar={updateFamiliar}
         removeFamiliar={removeFamiliar}
+        showErrors={asignacionFamiliar && !familiaresValidos}
       />
 
       <div className="flex justify-end mt-8">
         <Button
           type="submit"
-          disabled={!isValid}
-          className={`px-12 h-10 text-white ${isValid ? "bg-[#150AB4] hover:bg-[#0F088A]" : "bg-gray-300 cursor-not-allowed"}`}
+          disabled={!canSubmit}
+          className={`px-12 h-10 text-white ${canSubmit ? "bg-[#150AB4] hover:bg-[#0F088A]" : "bg-gray-300 cursor-not-allowed"}`}
         >
           Registrar
         </Button>

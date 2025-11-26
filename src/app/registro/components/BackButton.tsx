@@ -9,7 +9,7 @@ interface BackButtonProps {
 
 export function BackButton({ step, onBack }: BackButtonProps) {
   return (
-    <div className="flex justify-end mt-6">
+    <div className="flex justify-end">
       <Button
         size= "icon-lg"
         aria-label="Regresar al paso anterior"
