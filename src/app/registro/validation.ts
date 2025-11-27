@@ -103,8 +103,24 @@ export type EjecutivoSchemaType = z.infer<typeof ejecutivoSchema>;
 
 // Obrero form schema
 export const obreroSchema = z.object({
-  areaTrabajo: z.string().min(1, 'Área requerida'),
+  nombre: z.string().optional(),
+  apellidoPaterno: z.string().optional(),
+  apellidoMaterno: z.string().optional(),
+  numeroDocumento: z.string().optional(),
+  tipoDocumento: z.string().optional(),
+  fechaVinculacion: z.string().optional(),
+  fechaRetiro: z.string().optional(),
+  puesto: z.string().min(1, 'Puesto requerido'),
   turno: z.string().min(1, 'Turno requerido'),
-  salarioHora: z.string().refine(v => !!v && Number(v) > 0, 'Salario inválido'),
+  supervisor: z.string().min(1, 'Supervisor requerido'),
+  proyectosAsignado: z.string().min(1, 'Proyectos asignado requerido'),
+  clasificacionRiesgos: z.string().min(1, 'Clasificación de riesgos requerida'),
+  tipoContrato: z.string().min(1, 'Tipo de contrato requerido'),
+  sueldo: z.string().min(1, 'Sueldo requerido'),
+  banco: z.string().min(1, 'Banco requerido'),
+  numeroCuenta: z.string().min(1, 'Número de cuenta requerido'),
+  afiliacion: z.string().min(1, 'Afiliación requerida'),
+  regimenPensionario: z.string().min(1, 'Régimen pensionario requerido'),
+  cuspp: z.string().min(1, 'CUSPP requerido'),
 });
 export type ObreroSchemaType = z.infer<typeof obreroSchema>;

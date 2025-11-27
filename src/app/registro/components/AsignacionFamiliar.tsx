@@ -37,7 +37,7 @@ export default function AsignacionFamiliar({
     <div className="mb-6">
       <div className="flex items-center mb-3 gap-2">
         <label className="text-sm font-medium text-gray-700">Asignación Familiar</label>
-        <span className="text-xs text-gray-500">(Derechohabiente o Cónyuge)</span>
+        <span className="text-xs text-gray-500">(Del hijo(a) o Cónyuge)</span>
         <Checkbox checked={asignacionFamiliar} onCheckedChange={(v) => setAsignacionFamiliar(Boolean(v))} className="w-4 h-4 mr-2" />
       </div>
 

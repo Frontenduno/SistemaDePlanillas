@@ -15,9 +15,23 @@ interface DatePickerProps {
   disabled?: boolean;
 }
 
+// Parsea 'YYYY-MM-DD' sin problemas de timezone
+function parseLocalDate(isoString: string): Date {
+  const [year, month, day] = isoString.split('-').map(Number);
+  return new Date(year, month - 1, day);
+}
+
+// Formatea una fecha a 'YYYY-MM-DD' sin problemas de timezone
+function toISOLocalDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 export default function DatePicker({ value, onChange, placeholder = 'Seleccionar fecha', className = '', disabled = false }: DatePickerProps) {
   const [open, setOpen] = React.useState(false);
-  const parsed = React.useMemo(() => (value ? new Date(value) : undefined), [value]);
+  const parsed = React.useMemo(() => (value ? parseLocalDate(value) : undefined), [value]);
 
   function formatDate(d?: Date) {
     if (!d) return "";
@@ -66,7 +80,7 @@ export default function DatePicker({ value, onChange, placeholder = 'Seleccionar
             onSelect={(date) => {
               if (!date) return;
               setOpen(false);
-              const iso = date.toISOString().split('T')[0];
+              const iso = toISOLocalDate(date);
               setDisplay(formatDate(date));
               onChange?.(iso);
             }}
