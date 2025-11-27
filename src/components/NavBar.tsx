@@ -1,9 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { HiMenu, HiSearch, HiCalendar } from "react-icons/hi";
+import { useRouter } from "next/navigation";
+import { HiMenu, HiSearch, HiCalendar, HiLogout } from "react-icons/hi";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import Sidebar from "./Sidebar";
 
 interface NavbarProps {
@@ -16,6 +22,7 @@ export default function Navbar({
   userName = "Francisco Alvarez",
 }: NavbarProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const router = useRouter();
 
   const currentDate = new Date();
   const monthNames = [
@@ -39,6 +46,14 @@ export default function Navbar({
     setSidebarOpen(!sidebarOpen);
   };
 
+  const handleLogout = () => {
+    // Simular cierre de sesión
+    // Aquí podrías limpiar tokens, cookies, localStorage, etc.
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    router.push("/login");
+  };
+
   return (
     <>
       {/* Navbar fijado en top para que el Sidebar "pegado" mantenga la misma referencia al hacer scroll */}
@@ -51,8 +66,6 @@ export default function Navbar({
                 onClick={handleToggleSidebar}
                 variant="ghost"
                 size="icon"
-                aria-label="Alternar menú lateral"
-                title="Alternar menú"
                 className="text-white cursor-pointer hover:bg-blue-600"
               >
                 <HiMenu className="w-6 h-6" />
@@ -79,33 +92,52 @@ export default function Navbar({
             </div>
           </div>
 
-          {/* Right Section - User Info */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-              <span className="text-blue-700 font-bold text-sm">
-                {userName
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")}
-              </span>
-            </div>
-            <span className="text-sm font-medium hidden sm:block">
-              {userName}
-            </span>
-          </div>
+          {/* Right Section - User Info with Popover */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <button className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
+                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                  <span className="text-blue-700 font-bold text-sm">
+                    {userName
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
+                  </span>
+                </div>
+                <span className="text-sm font-medium hidden sm:block">
+                  {userName}
+                </span>
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-48 p-2" align="end">
+              <div className="flex flex-col gap-1">
+                <div className="px-2 py-1.5 text-sm font-medium text-gray-700 border-b mb-1">
+                  {userName}
+                </div>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start gap-2 text-red-600 hover:text-red-700 hover:bg-red-50"
+                  onClick={handleLogout}
+                >
+                  <HiLogout className="w-4 h-4" />
+                  Cerrar Sesión
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </nav>
 
       {/* Sidebar se posiciona con top igual a la altura del navbar (60px) */}
       <Sidebar isOpen={sidebarOpen} />
 
-      {/* Main Content - usamos padding-top para evitar crear un "gap" extra y respetar el navbar fijo */}
+      {/* Main Content - altura calculada para ocupar el resto de la pantalla sin crear scroll en body */}
       <main
-        className={`transition-all duration-300 pt-[60px] ${
+        className={`transition-all duration-300 pt-[60px] min-h-screen ${
           sidebarOpen ? "ml-64" : "ml-0"
         }`}
       >
-        {children}
+        <div className="h-[calc(100vh-60px)] overflow-y-auto">{children}</div>
       </main>
     </>
   );

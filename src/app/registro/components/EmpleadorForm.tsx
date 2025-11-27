@@ -1,13 +1,26 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue,} from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import type { PersonalFormState } from "./PersonalDataForm"; // Línea corregida
 
 interface EmpleadorFormProps {
   onBack: () => void;
+  personalForm?: Partial<PersonalFormState>;
+  cargo?: string;
 }
 
-export function EmpleadorForm({ onBack }: EmpleadorFormProps) {
+export function EmpleadorForm({
+  onBack,
+  personalForm,
+  cargo,
+}: EmpleadorFormProps) {
   return (
     <div>
       <h2 className="text-3xl font-bold text-blue-600 mb-8">

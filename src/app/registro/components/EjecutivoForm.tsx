@@ -1,15 +1,31 @@
 "use client";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
+// 1. Importamos el tipo necesario
+import type { PersonalFormState } from "./PersonalDataForm";
 
 interface EjecutivoFormProps {
   onBack: () => void;
+  // 2. Agregamos las propiedades que WorkDataForm está enviando
+  personalForm?: Partial<PersonalFormState>;
+  cargo?: string;
 }
 
-export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
+// 3. Actualizamos la función para recibir las nuevas props
+export function EjecutivoForm({
+  onBack,
+  personalForm,
+  cargo,
+}: EjecutivoFormProps) {
   const [formData, setFormData] = useState({
     nombre: "",
     apellidoPaterno: "",
@@ -42,72 +58,160 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
     gratificacion: false,
   });
 
-  const handleInputChange = (field: keyof typeof formData, value: string | boolean) => {
+  const handleInputChange = (
+    field: keyof typeof formData,
+    value: string | boolean
+  ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   return (
     <div>
-      <h2 className="text-3xl font-bold text-blue-600 mb-8">Datos del Trabajador</h2>
+      <h2 className="text-3xl font-bold text-blue-600 mb-8">
+        Datos del Trabajador
+      </h2>
 
       {/* Row 1: Nombre, Apellido Paterno, Apellido Materno (cols 1-3) */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
-          <Input className="bg-gray-200 h-10 w-full" disabled value={formData.nombre} onChange={(e) => handleInputChange("nombre", e.target.value)} />
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Nombre
+          </label>
+          {/* Aquí podrías usar personalForm.nombre si quisieras pre-llenarlo */}
+          <Input
+            className="bg-gray-200 h-10 w-full"
+            disabled
+            value={formData.nombre}
+            onChange={(e) => handleInputChange("nombre", e.target.value)}
+          />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Apellido Paterno</label>
-          <Input className="bg-gray-200 h-10 w-full" disabled value={formData.apellidoPaterno} onChange={(e) => handleInputChange("apellidoPaterno", e.target.value)} />
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Apellido Paterno
+          </label>
+          <Input
+            className="bg-gray-200 h-10 w-full"
+            disabled
+            value={formData.apellidoPaterno}
+            onChange={(e) =>
+              handleInputChange("apellidoPaterno", e.target.value)
+            }
+          />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Apellido Materno</label>
-          <Input className="bg-gray-200 h-10 w-full" disabled value={formData.apellidoMaterno} onChange={(e) => handleInputChange("apellidoMaterno", e.target.value)} />
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Apellido Materno
+          </label>
+          <Input
+            className="bg-gray-200 h-10 w-full"
+            disabled
+            value={formData.apellidoMaterno}
+            onChange={(e) =>
+              handleInputChange("apellidoMaterno", e.target.value)
+            }
+          />
         </div>
       </div>
 
       {/* Row 2: Tipo de Documento (col 1), N° de Documento (col 2), Cargo (col 4) */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Tipo de Documento*</label>
-          <Input className="bg-gray-200 h-10 w-full" disabled value="DNI" readOnly />
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Tipo de Documento*
+          </label>
+          <Input
+            className="bg-gray-200 h-10 w-full"
+            disabled
+            value="DNI"
+            readOnly
+          />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">N° de Documento*</label>
-          <Input className="bg-gray-200 h-10 w-full" disabled value={formData.numeroDocumento} onChange={(e) => handleInputChange("numeroDocumento", e.target.value)} />
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            N° de Documento*
+          </label>
+          <Input
+            className="bg-gray-200 h-10 w-full"
+            disabled
+            value={formData.numeroDocumento}
+            onChange={(e) =>
+              handleInputChange("numeroDocumento", e.target.value)
+            }
+          />
         </div>
         <div></div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Cargo</label>
-          <Input className="bg-gray-200 h-10 w-full" disabled value="Empleado" readOnly />
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Cargo
+          </label>
+          {/* Usamos la prop 'cargo' para mostrarlo dinámicamente o lo dejamos fijo si prefieres */}
+          <Input
+            className="bg-gray-200 h-10 w-full"
+            disabled
+            value={cargo || "Ejecutivo"}
+            readOnly
+          />
         </div>
       </div>
 
       {/* Row 3: Fecha de Vinculación (col 1), Fecha de Retiro (col 2) */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Fecha de Vinculación*</label>
-          <Input type="date" className="bg-white h-10 w-full" value={formData.fechaVinculacion} onChange={(e) => handleInputChange("fechaVinculacion", e.target.value)} />
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Fecha de Vinculación*
+          </label>
+          <Input
+            type="date"
+            className="bg-white h-10 w-full"
+            value={formData.fechaVinculacion}
+            onChange={(e) =>
+              handleInputChange("fechaVinculacion", e.target.value)
+            }
+          />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Fecha de Retiro</label>
-          <Input type="date" className="bg-white h-10 w-full" value={formData.fechaRetiro} onChange={(e) => handleInputChange("fechaRetiro", e.target.value)} />
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Fecha de Retiro
+          </label>
+          <Input
+            type="date"
+            className="bg-white h-10 w-full"
+            value={formData.fechaRetiro}
+            onChange={(e) => handleInputChange("fechaRetiro", e.target.value)}
+          />
         </div>
       </div>
 
       {/* Row 4: Sede, Área, Turno (cols 1-3) */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Sede*</label>
-          <Input className="bg-white h-10 w-full" value={formData.sede} onChange={(e) => handleInputChange("sede", e.target.value)} />
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Sede*
+          </label>
+          <Input
+            className="bg-white h-10 w-full"
+            value={formData.sede}
+            onChange={(e) => handleInputChange("sede", e.target.value)}
+          />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Área*</label>
-          <Input className="bg-white h-10 w-full" value={formData.area} onChange={(e) => handleInputChange("area", e.target.value)} />
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Área*
+          </label>
+          <Input
+            className="bg-white h-10 w-full"
+            value={formData.area}
+            onChange={(e) => handleInputChange("area", e.target.value)}
+          />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Turno*</label>
-          <Select value={formData.turno} onValueChange={(value) => handleInputChange("turno", value)}>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Turno*
+          </label>
+          <Select
+            value={formData.turno}
+            onValueChange={(value) => handleInputChange("turno", value)}
+          >
             <SelectTrigger className="bg-white h-10 w-full">
               <SelectValue placeholder="Seleccione Turno" />
             </SelectTrigger>
@@ -123,8 +227,13 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
       {/* Row 5: Tipo de Contrato (col 1), Tipo de Pago (col 2) */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Tipo de Contrato*</label>
-          <Select value={formData.tipoContrato} onValueChange={(value) => handleInputChange("tipoContrato", value)}>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Tipo de Contrato*
+          </label>
+          <Select
+            value={formData.tipoContrato}
+            onValueChange={(value) => handleInputChange("tipoContrato", value)}
+          >
             <SelectTrigger className="bg-white h-10 w-full">
               <SelectValue placeholder="Seleccione Contrato" />
             </SelectTrigger>
@@ -135,8 +244,13 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
           </Select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Tipo de Pago*</label>
-          <Select value={formData.tipoPago} onValueChange={(value) => handleInputChange("tipoPago", value)}>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Tipo de Pago*
+          </label>
+          <Select
+            value={formData.tipoPago}
+            onValueChange={(value) => handleInputChange("tipoPago", value)}
+          >
             <SelectTrigger className="bg-white h-10 w-full">
               <SelectValue placeholder="Seleccione el tipo" />
             </SelectTrigger>
@@ -151,8 +265,13 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
       {/* Row 6: Ocupación, Jornada Laboral, Jefe Inmediato (cols 1-3) */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Ocupación*</label>
-          <Select value={formData.ocupacion} onValueChange={(value) => handleInputChange("ocupacion", value)}>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Ocupación*
+          </label>
+          <Select
+            value={formData.ocupacion}
+            onValueChange={(value) => handleInputChange("ocupacion", value)}
+          >
             <SelectTrigger className="bg-white h-10 w-full">
               <SelectValue placeholder="Seleccione Ocupación" />
             </SelectTrigger>
@@ -163,8 +282,15 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
           </Select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Jornada Laboral*</label>
-          <Select value={formData.jornadaLaboral} onValueChange={(value) => handleInputChange("jornadaLaboral", value)}>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Jornada Laboral*
+          </label>
+          <Select
+            value={formData.jornadaLaboral}
+            onValueChange={(value) =>
+              handleInputChange("jornadaLaboral", value)
+            }
+          >
             <SelectTrigger className="bg-white h-10 w-full">
               <SelectValue placeholder="Seleccione Jornada" />
             </SelectTrigger>
@@ -175,8 +301,13 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
           </Select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Jefe Inmediato*</label>
-          <Select value={formData.jefeInmediato} onValueChange={(value) => handleInputChange("jefeInmediato", value)}>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Jefe Inmediato*
+          </label>
+          <Select
+            value={formData.jefeInmediato}
+            onValueChange={(value) => handleInputChange("jefeInmediato", value)}
+          >
             <SelectTrigger className="bg-white h-10 w-full">
               <SelectValue placeholder="Seleccione Jefe" />
             </SelectTrigger>
@@ -191,28 +322,39 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
       {/* Row 7: Horario Laboral (Inicio y Fin), Días Laborales, Sueldo */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Horario Laboral*</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Horario Laboral*
+          </label>
           <div className="flex gap-2">
-            <Input 
-              type="time" 
-              className="bg-white h-10 w-full" 
-              value={formData.horarioLaboralInicio} 
-              onChange={(e) => handleInputChange("horarioLaboralInicio", e.target.value)} 
+            <Input
+              type="time"
+              className="bg-white h-10 w-full"
+              value={formData.horarioLaboralInicio}
+              onChange={(e) =>
+                handleInputChange("horarioLaboralInicio", e.target.value)
+              }
               placeholder="8:00 AM"
             />
             <span className="flex items-center">hasta</span>
-            <Input 
-              type="time" 
-              className="bg-white h-10 w-full" 
-              value={formData.horarioLaboralFin} 
-              onChange={(e) => handleInputChange("horarioLaboralFin", e.target.value)} 
+            <Input
+              type="time"
+              className="bg-white h-10 w-full"
+              value={formData.horarioLaboralFin}
+              onChange={(e) =>
+                handleInputChange("horarioLaboralFin", e.target.value)
+              }
               placeholder="6:00 PM"
             />
           </div>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Días Laborales*</label>
-          <Select value={formData.diasLaborales} onValueChange={(value) => handleInputChange("diasLaborales", value)}>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Días Laborales*
+          </label>
+          <Select
+            value={formData.diasLaborales}
+            onValueChange={(value) => handleInputChange("diasLaborales", value)}
+          >
             <SelectTrigger className="bg-white h-10 w-full">
               <SelectValue placeholder="Lunes - Viernes" />
             </SelectTrigger>
@@ -224,12 +366,14 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
           </Select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Sueldo*</label>
-          <Input 
-            type="number" 
-            className="bg-white h-10 w-full" 
-            value={formData.sueldo} 
-            onChange={(e) => handleInputChange("sueldo", e.target.value)} 
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Sueldo*
+          </label>
+          <Input
+            type="number"
+            className="bg-white h-10 w-full"
+            value={formData.sueldo}
+            onChange={(e) => handleInputChange("sueldo", e.target.value)}
             placeholder="1200"
           />
         </div>
@@ -238,8 +382,13 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
       {/* Row 8: Forma de Pago */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Forma de Pago*</label>
-          <Select value={formData.formaPago} onValueChange={(value) => handleInputChange("formaPago", value)}>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Forma de Pago*
+          </label>
+          <Select
+            value={formData.formaPago}
+            onValueChange={(value) => handleInputChange("formaPago", value)}
+          >
             <SelectTrigger className="bg-white h-10 w-full">
               <SelectValue placeholder="Depósito Bancario" />
             </SelectTrigger>
@@ -258,7 +407,9 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
       {/* Row 9: Banco, N° de Cuenta, Fondo Pensionario, Tipo de AFP */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Banco*</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Banco*
+          </label>
           <Input
             className="bg-white h-10 w-full"
             value={formData.banco}
@@ -266,7 +417,9 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">N° de Cuenta*</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            N° de Cuenta*
+          </label>
           <Input
             className="bg-white h-10 w-full"
             value={formData.numeroCuenta}
@@ -274,8 +427,15 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Fondo Pensionario*</label>
-          <Select value={formData.fondoPensionario} onValueChange={(value) => handleInputChange("fondoPensionario", value)}>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Fondo Pensionario*
+          </label>
+          <Select
+            value={formData.fondoPensionario}
+            onValueChange={(value) =>
+              handleInputChange("fondoPensionario", value)
+            }
+          >
             <SelectTrigger className="bg-white h-10 w-full">
               <SelectValue placeholder="Seleccione" />
             </SelectTrigger>
@@ -286,7 +446,9 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
           </Select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Tipo de AFP*</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Tipo de AFP*
+          </label>
           <Input
             className="bg-white h-10 w-full"
             value={formData.tipoAfp}
@@ -298,8 +460,13 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
       {/* Row 10: Seguro, Horas Extras, (empty), CUSPP */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Seguro*</label>
-          <Select value={formData.seguroVida} onValueChange={(value) => handleInputChange("seguroVida", value)}>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Seguro*
+          </label>
+          <Select
+            value={formData.seguroVida}
+            onValueChange={(value) => handleInputChange("seguroVida", value)}
+          >
             <SelectTrigger className="bg-white h-10 w-full">
               <SelectValue placeholder="Seleccione" />
             </SelectTrigger>
@@ -310,8 +477,13 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
           </Select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Horas Extras*</label>
-          <Select value={formData.horasExtras} onValueChange={(value) => handleInputChange("horasExtras", value)}>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Horas Extras*
+          </label>
+          <Select
+            value={formData.horasExtras}
+            onValueChange={(value) => handleInputChange("horasExtras", value)}
+          >
             <SelectTrigger className="bg-white h-10 w-full">
               <SelectValue placeholder="Seleccione" />
             </SelectTrigger>
@@ -323,7 +495,9 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
         </div>
         <div></div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">CUSPP*</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            CUSPP*
+          </label>
           <Input
             className="bg-white h-10 w-full"
             value={formData.cuspp}
@@ -335,8 +509,15 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
       {/* Row 11: Bonificaciones Corporativas, CTS, Gratificación (label + checkbox centered) */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Bonificaciones Corporativas*</label>
-          <Select value={formData.bonificacionesCorporativas} onValueChange={(value) => handleInputChange("bonificacionesCorporativas", value)}>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Bonificaciones Corporativas*
+          </label>
+          <Select
+            value={formData.bonificacionesCorporativas}
+            onValueChange={(value) =>
+              handleInputChange("bonificacionesCorporativas", value)
+            }
+          >
             <SelectTrigger className="bg-white h-10 w-full">
               <SelectValue placeholder="Antigüedad" />
             </SelectTrigger>
@@ -348,23 +529,29 @@ export function EjecutivoForm({ onBack }: EjecutivoFormProps) {
           </Select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">CTS*</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            CTS*
+          </label>
           <Input
             className="bg-white h-10 w-full"
             value={formData.cts}
             onChange={(e) => handleInputChange("cts", e.target.value)}
           />
         </div>
-          <div>
-            <div className="h-10 flex items-end pl-2">
-              <label className="text-sm font-medium text-gray-700 mr-2">Gratificación*</label>
-              <Checkbox
-                className="w-4 h-4 rounded-none"
-                checked={Boolean(formData.gratificacion)}
-                onCheckedChange={(checked) => handleInputChange("gratificacion", Boolean(checked))}
-              />
-            </div>
+        <div>
+          <div className="h-10 flex items-end pl-2">
+            <label className="text-sm font-medium text-gray-700 mr-2">
+              Gratificación*
+            </label>
+            <Checkbox
+              className="w-4 h-4 rounded-none"
+              checked={Boolean(formData.gratificacion)}
+              onCheckedChange={(checked) =>
+                handleInputChange("gratificacion", Boolean(checked))
+              }
+            />
           </div>
+        </div>
       </div>
 
       <div className="flex justify-end mt-8">
