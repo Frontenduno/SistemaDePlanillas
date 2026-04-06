@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,13 +11,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { empleadosResumen } from "../data/asistenciasData"; // Importamos los datos
+import { empleadosResumen } from "../data/asistenciasData";
 
-interface Props {
-  onNavigateToRevi: () => void; // Prop para navegar
-}
+export default function RevisionAsistencia() {
+  const router = useRouter();
 
-export default function RevisionAsistencia({ onNavigateToRevi }: Props) {
   const [filtros, setFiltros] = useState({
     empresa: "Fábrica XYZ S.A.C.",
     periodo: "Marzo",
@@ -219,8 +218,12 @@ export default function RevisionAsistencia({ onNavigateToRevi }: Props) {
             {">"}
           </Button>
         </div>
-        {/* AQUÍ EL CAMBIO: Usamos el prop onNavigateToRevi */}
-        <Button className="bg-blue-700 text-white" onClick={onNavigateToRevi}>
+        
+        {/* Aquí está el cambio hacia el uso del router.push de Next.js */}
+        <Button 
+          className="bg-blue-700 text-white hover:bg-blue-800" 
+          onClick={() => router.push('/asistencias/tareo')}
+        >
           Revisión de Asistencias
         </Button>
       </div>

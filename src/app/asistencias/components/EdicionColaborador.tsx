@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -13,14 +14,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
 import Image from "next/image";
-import { colaboradorDetalle } from "../data/asistenciasData"; // Importamos los datos
+import { colaboradorDetalle } from "../data/asistenciasData";
 
 interface Props {
-  codigo: string | null; // Para saber a quién editamos (aunque usaremos el mock)
-  onBack: () => void; // Para cancelar/guardar y volver
+  codigo: string | null; 
+  // Eliminamos onBack de aquí porque el router se encarga ahora
 }
 
-export default function EdicionColaborador({ codigo, onBack }: Props) {
+export default function EdicionColaborador({ codigo }: Props) {
+  const router = useRouter();
+
   const [filtros, setFiltros] = useState({
     codigo: "",
     nombres: "",
@@ -30,7 +33,6 @@ export default function EdicionColaborador({ codigo, onBack }: Props) {
     categoria: "Obrero",
   });
 
-  // Usamos los datos importados
   const colaborador = colaboradorDetalle;
 
   const horarioInicial = {
@@ -38,6 +40,7 @@ export default function EdicionColaborador({ codigo, onBack }: Props) {
     salida: "6:00 pm",
     extras: "00:00 pm",
   };
+  
   const diasSemana = [
     "Lunes",
     "Martes",
@@ -54,7 +57,8 @@ export default function EdicionColaborador({ codigo, onBack }: Props) {
         <h1 className="text-2xl font-bold text-blue-900">
           Asistencias (Tareo): J & P Perifericos
         </h1>
-        <Button variant="outline" onClick={onBack}>
+        {/* Cambio: Usamos router.back() para regresar a la página anterior en el historial */}
+        <Button variant="outline" onClick={() => router.back()}>
           Cancelar
         </Button>
       </div>
@@ -62,7 +66,6 @@ export default function EdicionColaborador({ codigo, onBack }: Props) {
       <Card className="p-4 bg-gray-50">
         <div className="grid grid-cols-[1fr_200px] gap-8">
           <div className="grid grid-cols-3 gap-x-8 gap-y-4">
-            {/* Filtros copiados tal cual */}
             <div>
               <label className="block text-sm mb-1">Código:</label>
               <Input
@@ -179,7 +182,6 @@ export default function EdicionColaborador({ codigo, onBack }: Props) {
         </h2>
         <div className="flex items-start gap-6">
           <Avatar className="w-24 h-24">
-            {/* Asumimos que tienes next/image configurado o la imagen existe */}
             {colaborador.foto && (
               <Image
                 src={colaborador.foto}
@@ -252,9 +254,10 @@ export default function EdicionColaborador({ codigo, onBack }: Props) {
         </div>
 
         <div className="flex justify-end mt-6">
+          {/* Cambio: Redirigimos a la tabla de tareo al guardar */}
           <Button
             className="bg-blue-500 text-white hover:bg-blue-600"
-            onClick={onBack}
+            onClick={() => router.push('/asistencias/tareo')}
           >
             Guardar
           </Button>

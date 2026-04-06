@@ -47,10 +47,9 @@ export default function Navbar({
   };
 
   const handleLogout = () => {
-    // Simular cierre de sesión
-    // Aquí podrías limpiar tokens, cookies, localStorage, etc.
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    localStorage.removeItem("userRole"); // NUEVO
     router.push("/login");
   };
 
