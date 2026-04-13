@@ -1,6 +1,5 @@
 "use client";
 import { mockCollaborator } from "../mock/collaboratorData";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -10,6 +9,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+// IMPORTAMOS EL MODAL AQUÍ
+import BoletaModal from "./BoletaModal";
 
 export default function ProfileHeader() {
   const col = mockCollaborator;
@@ -19,7 +20,7 @@ export default function ProfileHeader() {
       {/* 🔹 Sección izquierda: avatar + información */}
       <div className="flex gap-6 w-full">
         {/* Avatar del colaborador */}
-  <div className="shrink-0">
+        <div className="shrink-0">
           <Avatar className="size-24 border">
             <AvatarImage src={col.foto} alt={col.nombre} />
             <AvatarFallback>{col.nombre.charAt(0)}</AvatarFallback>
@@ -97,10 +98,8 @@ export default function ProfileHeader() {
         </div>
       </div>
 
-      {/* 🔹 Botón de la derecha */}
-      <Button className="bg-blue-700 hover:bg-blue-800 px-6 py-3 rounded-xl text-white h-fit">
-        Generar Boleta
-      </Button>
+      {/* 🔹 Botón de la derecha: AHORA LLAMA AL MODAL */}
+      <BoletaModal collaboratorId={col.id.toString()} />
     </div>
   );
 }

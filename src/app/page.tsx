@@ -1,9 +1,7 @@
-'use client';
+// src/app/page.tsx
+import { redirect } from "next/navigation";
 
-// Renderizar el componente de login directamente en la raíz (/)
-// Importamos el export default de la página de login y lo reusamos aquí
-import Login from './login/page';
-
-export default function Page() {
-  return <Login />;
+export default function RootPage() {
+  // Redirige automáticamente al usuario a la página de login
+  redirect("/login");
 }

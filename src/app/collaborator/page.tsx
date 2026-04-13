@@ -160,11 +160,6 @@ export default function CollaboratorPage() {
             <SelectItem value="Inactivo">Inactivo</SelectItem>
           </SelectContent>
         </Select>
-
-        {/* Botón principal */}
-        <Button className="bg-blue-700 hover:bg-blue-800 rounded-3xl px-6">
-          Generar Boleta
-        </Button>
       </div>
 
       {/* Tabla */}

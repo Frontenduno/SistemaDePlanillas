@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MdDashboard, MdPeople, MdDescription } from "react-icons/md";
+import { MdDashboard, MdPeople, MdDescription, MdEmail, MdChatBubbleOutline } from "react-icons/md";
 import { PiBagSimpleFill } from "react-icons/pi";
 import { FaCalendarCheck, FaLocationArrow } from "react-icons/fa";
 import Link from "next/link";
@@ -37,6 +37,8 @@ export default function Sidebar({ isOpen }: SidebarProps) {
     { icon: FaLocationArrow, label: 'Vacaciones', href: '/vacaciones', roles: ['hr'] },
     { icon: FaCalendarCheck, label: 'Ctrl. de asistencias', href: '/asistencias', roles: ['hr', 'contador'] },
     { icon: PiBagSimpleFill, label: 'Empresas', href: '/empresas', roles: ['hr'] },
+    { icon: MdEmail, label: 'Mensaje', href: '/mensajes', roles: ['hr'] },
+    { icon: MdChatBubbleOutline, label: 'Envío de Solicitudes', href: '/envio-solicitudes', roles: ['hr'] },
   ];
 
   // Filtramos la lista según el rol activo

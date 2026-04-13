@@ -1,121 +1,78 @@
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  MoreVertical,
-  DollarSign,
-  FileText,
-  PiggyBank,
-  BarChart3,
-} from "lucide-react";
+"use client";
+
+import { useRouter } from "next/navigation";
+import { MoreVertical, DollarSign, FileText, ShieldCheck } from "lucide-react";
 
 interface Proceso {
   id: string;
   titulo: string;
   actualizado: boolean;
   icono: React.ElementType;
+  href?: string; // Propiedad opcional para la ruta
 }
 
 const procesos: Proceso[] = [
-  { id: "1", titulo: "Sueldos", actualizado: true, icono: DollarSign },
-  { id: "2", titulo: "Remuneraciones", actualizado: false, icono: FileText },
-  { id: "3", titulo: "Aportes", actualizado: true, icono: PiggyBank },
-  { id: "4", titulo: "Reportes", actualizado: false, icono: BarChart3 },
+  // Añadimos el href a Sueldos
+  { id: "1", titulo: "Sueldos", actualizado: true, icono: DollarSign, href: "/dashboard/sueldos" },
+  { id: "2", titulo: "Remuneraciones", actualizado: false, icono: FileText, href: "/dashboard/remuneraciones" },
+  { id: "3", titulo: "Aportes", actualizado: false, icono: FileText, href: "/dashboard/aportes" },
+  { id: "4", titulo: "Reportes", actualizado: false, icono: ShieldCheck, href: "/dashboard/reportes" },
 ];
 
 export function CardProcesos() {
+  const router = useRouter();
+
   return (
-    <div className="relative">
-      {/* Contenedor con scrollbar arriba */}
-      <div
-        className="flex gap-2 overflow-x-auto pt-2.5 pb-2 px-2 bg-gray-100 rounded custom-scrollbar-top"
-        dir="rtl"
-      >
-        <div className="flex gap-2" dir="ltr">
-          {procesos.map((proceso) => (
-            <Card
-              key={proceso.id}
-              className="bg-white relative overflow-hidden shrink-0 w-52 py-3"
+    <div className="w-full">
+      <div className="flex flex-wrap md:flex-nowrap gap-3 overflow-x-auto custom-scrollbar pb-2">
+        {procesos.map((proceso) => (
+          <div
+            key={proceso.id}
+            onClick={() => proceso.href && router.push(proceso.href)}
+            className={`flex items-center gap-3 bg-white p-2.5 rounded-lg border border-gray-300 shadow-sm min-w-[190px] shrink-0 border-l-[6px] transition-all duration-200 ${
+              proceso.actualizado ? "border-l-[#2563eb]" : "border-l-[#eab308]"
+            } ${proceso.href ? "cursor-pointer hover:shadow-md hover:bg-gray-50" : ""}`}
+          >
+            {/* Círculo con Icono */}
+            <div
+              className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
+                proceso.actualizado ? "bg-[#2563eb]" : "bg-[#facc15]"
+              }`}
             >
-              {/* Borde izquierdo */}
-              <div
-                className={`absolute left-0 top-0 bottom-0 w-1.5 ${
-                  proceso.actualizado ? "bg-blue-500" : "bg-yellow-500"
-                }`}
-              />
+              <proceso.icono className="w-5 h-5 text-white" strokeWidth={2.5} />
+            </div>
 
-              {/* Contenido */}
-              <div className="flex items-center justify-between px-1 py-0.5 pl-2.5">
-                <div className="flex items-center gap-2 flex-1 min-w-0">
-                  {/* Icono */}
-                  <div
-                    className={`p-1.5 rounded-full ${
-                      proceso.actualizado ? "bg-blue-100" : "bg-yellow-100"
-                    }`}
-                  >
-                    <proceso.icono
-                      className={`h-5 w-5 ${
-                        proceso.actualizado
-                          ? "text-blue-600"
-                          : "text-yellow-600"
-                      }`}
-                    />
-                  </div>
+            {/* Textos */}
+            <div className="flex flex-col flex-1 min-w-0">
+              <span className="text-sm font-bold text-gray-900 leading-tight">
+                {proceso.titulo}
+              </span>
+              <span className="text-[11px] text-gray-500 font-medium leading-tight mt-0.5">
+                {proceso.actualizado ? "Actualizado" : "Desactualizado"}
+              </span>
+            </div>
 
-                  {/* Texto */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-sm font-semibold text-gray-900 truncate leading-tight">
-                      {proceso.titulo}
-                    </h3>
-                    <p
-                      className={`text-xs leading-tight ${
-                        proceso.actualizado
-                          ? "text-blue-600"
-                          : "text-yellow-600"
-                      }`}
-                    >
-                      {proceso.actualizado ? "Actualizado" : "Desactualizado"}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Botón de tres puntos */}
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  aria-label={`Opciones para ${proceso.titulo}`}
-                  title={`Opciones para ${proceso.titulo}`}
-                  className="h-5 w-5 shrink-0"
-                >
-                  <MoreVertical className="h-3.5 w-3.5 text-gray-500" />
-                </Button>
-              </div>
-            </Card>
-          ))}
-        </div>
+            {/* Tres Puntos */}
+            <button className="text-gray-400 hover:text-gray-600 transition-colors p-1">
+              <MoreVertical className="w-5 h-5" />
+            </button>
+          </div>
+        ))}
       </div>
 
-      {/* Estilos personalizados para el scrollbar */}
       <style jsx>{`
-        .custom-scrollbar-top::-webkit-scrollbar {
-          height: 8px;
+        .custom-scrollbar::-webkit-scrollbar {
+          height: 6px;
         }
-
-        .custom-scrollbar-top::-webkit-scrollbar-track {
+        .custom-scrollbar::-webkit-scrollbar-track {
           background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #cbd5e1;
           border-radius: 10px;
         }
-
-        .custom-scrollbar-top::-webkit-scrollbar-thumb {
-          background: #22c55e;
-          border-radius: 10px;
-        }
-
-        .custom-scrollbar-top::-webkit-scrollbar-thumb:hover {
-          background: #16a34a;
-        }
-
-        .custom-scrollbar-top::-webkit-scrollbar-button {
-          display: none;
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #94a3b8;
         }
       `}</style>
     </div>
