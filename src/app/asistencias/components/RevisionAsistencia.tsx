@@ -23,6 +23,9 @@ export default function RevisionAsistencia() {
     categoria: "Obrero",
     periodicidad: "Semanal",
     dias: 30,
+    // Agregamos código y nombre al estado para controlarlos
+    codigo: "",
+    nombre: "",
   });
 
   return (
@@ -32,7 +35,10 @@ export default function RevisionAsistencia() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mb-1">
           <div className="flex items-center gap-2">
             <label className="font-semibold">Periodo:</label>
-            <Select defaultValue={filtros.periodo}>
+            <Select 
+              value={filtros.periodo} 
+              onValueChange={(val) => setFiltros({ ...filtros, periodo: val })}
+            >
               <SelectTrigger className="h-8 w-28">
                 <SelectValue placeholder="Periodo" />
               </SelectTrigger>
@@ -44,7 +50,10 @@ export default function RevisionAsistencia() {
           </div>
           <div className="flex items-center gap-2">
             <label className="font-semibold">Año activo:</label>
-            <Select defaultValue={filtros.anio}>
+            <Select 
+              value={filtros.anio}
+              onValueChange={(val) => setFiltros({ ...filtros, anio: val })}
+            >
               <SelectTrigger className="h-8 w-24">
                 <SelectValue placeholder="Año" />
               </SelectTrigger>
@@ -58,7 +67,10 @@ export default function RevisionAsistencia() {
             <label className="font-semibold whitespace-nowrap">
               Categoría Ocupacional:
             </label>
-            <Select defaultValue={filtros.categoria}>
+            <Select 
+              value={filtros.categoria}
+              onValueChange={(val) => setFiltros({ ...filtros, categoria: val })}
+            >
               <SelectTrigger className="h-8 w-32">
                 <SelectValue placeholder="Categoría" />
               </SelectTrigger>
@@ -70,7 +82,10 @@ export default function RevisionAsistencia() {
           </div>
           <div className="flex items-center gap-2">
             <label className="font-semibold">Periodicidad:</label>
-            <Select defaultValue={filtros.periodicidad}>
+            <Select 
+              value={filtros.periodicidad}
+              onValueChange={(val) => setFiltros({ ...filtros, periodicidad: val })}
+            >
               <SelectTrigger className="h-8 w-28">
                 <SelectValue placeholder="Periodicidad" />
               </SelectTrigger>
@@ -95,11 +110,21 @@ export default function RevisionAsistencia() {
         <div className="grid grid-cols-1 md:grid-cols-5 items-center gap-4">
           <div className="flex items-center gap-2">
             <label className="font-semibold w-16">Código:</label>
-            <Input placeholder="Código" className="h-8 w-full bg-white" />
+            <Input 
+              placeholder="Código" 
+              className="h-8 w-full bg-white" 
+              value={filtros.codigo}
+              onChange={(e) => setFiltros({ ...filtros, codigo: e.target.value })}
+            />
           </div>
           <div className="flex items-center gap-2">
             <label className="font-semibold w-16">Nombre:</label>
-            <Input placeholder="Nombre" className="h-8 w-full bg-white" />
+            <Input 
+              placeholder="Nombre" 
+              className="h-8 w-full bg-white" 
+              value={filtros.nombre}
+              onChange={(e) => setFiltros({ ...filtros, nombre: e.target.value })}
+            />
           </div>
           <div className="flex items-center gap-2">
             <label className="font-semibold whitespace-nowrap">
@@ -126,7 +151,10 @@ export default function RevisionAsistencia() {
 
       <div className="flex items-center gap-2">
         <label className="font-semibold text-sm">Empresa:</label>
-        <Select defaultValue={filtros.empresa}>
+        <Select 
+          value={filtros.empresa}
+          onValueChange={(val) => setFiltros({ ...filtros, empresa: val })}
+        >
           <SelectTrigger className="h-8 w-72 bg-white">
             <SelectValue placeholder="Seleccione empresa" />
           </SelectTrigger>
@@ -219,7 +247,6 @@ export default function RevisionAsistencia() {
           </Button>
         </div>
         
-        {/* Aquí está el cambio hacia el uso del router.push de Next.js */}
         <Button 
           className="bg-blue-700 text-white hover:bg-blue-800" 
           onClick={() => router.push('/asistencias/tareo')}

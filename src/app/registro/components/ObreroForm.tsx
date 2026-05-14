@@ -9,7 +9,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-// import { PRIMARY_COLOR } from "./constants"; // <--- Ya no es necesario importar esto
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -99,7 +98,6 @@ export function ObreroForm({ onBack, personalForm, cargo }: ObreroFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex items-center justify-between mb-8">
-        {/* CORRECCIÓN AQUÍ: Usamos text-[#150AB4] en lugar de style={{ color: ... }} */}
         <h2 className="text-3xl font-bold text-[#150AB4]">
           Datos del Trabajador
         </h2>
@@ -121,7 +119,6 @@ export function ObreroForm({ onBack, personalForm, cargo }: ObreroFormProps) {
         }
       />
 
-      {/* Resto del formulario igual... */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <Field label="Puesto" required error={errors.puesto?.message}>
           <Input className="bg-white h-10 w-full" {...register("puesto")} />
@@ -260,7 +257,11 @@ export function ObreroForm({ onBack, personalForm, cargo }: ObreroFormProps) {
         showErrors={asignacionFamiliar && !familiaresValidos}
       />
 
-      <div className="flex justify-end mt-8">
+      {/* SECCIÓN CORREGIDA: Botón de volver y registrar */}
+      <div className="flex justify-between mt-8">
+        <Button type="button" variant="outline" onClick={onBack}>
+          Volver
+        </Button>
         <Button
           type="submit"
           disabled={!canSubmit}

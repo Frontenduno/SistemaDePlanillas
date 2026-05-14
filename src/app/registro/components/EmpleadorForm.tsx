@@ -1,14 +1,7 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import type { PersonalFormState } from "./PersonalDataForm"; // Línea corregida
+import type { PersonalFormState } from "./PersonalDataForm";
 
 interface EmpleadorFormProps {
   onBack: () => void;
@@ -18,7 +11,7 @@ interface EmpleadorFormProps {
 
 export function EmpleadorForm({
   onBack,
-  personalForm,
+  // Eliminamos personalForm de aquí para que no se declare como variable sin usar
   cargo,
 }: EmpleadorFormProps) {
   return (
@@ -44,11 +37,15 @@ export function EmpleadorForm({
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Cargo<span className="text-red-500">*</span>
           </label>
-          <Input className="bg-white h-10" />
+          {/* Utilizamos la prop 'cargo' para inicializar el valor */}
+          <Input className="bg-white h-10" defaultValue={cargo || ""} />
         </div>
       </div>
 
-      <div className="flex justify-end mt-8">
+      <div className="flex justify-between mt-8">
+        <Button variant="outline" onClick={onBack}>
+          Volver
+        </Button>
         <Button className="px-12 h-10 text-white bg-cyan-500 hover:bg-cyan-600">
           Guardar
         </Button>

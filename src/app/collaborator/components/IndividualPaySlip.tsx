@@ -12,7 +12,7 @@ const namdhinggo = Namdhinggo({
 });
 
 interface IndividualPaySlipProps {
-  collaboratorId: string; // Se usará para datos dinámicos en el futuro
+  collaboratorId: string; 
 }
 
 // Datos estáticos basados en la imagen para esta fase
@@ -41,6 +41,8 @@ const boletaData = {
   ],
 };
 
+// Se agregó esta línea para desactivar el warning de ESLint solo en este componente
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function IndividualPaySlip({ collaboratorId }: IndividualPaySlipProps) {
   // Aquí usarías collaboratorId para obtener datos dinámicos. Por ahora, usamos boletaData.
 
@@ -49,7 +51,7 @@ export default function IndividualPaySlip({ collaboratorId }: IndividualPaySlipP
   const netoAPagar = totalIngresos - totalDescuentos;
 
   const formatDate = (date: Date) => {
-    return format(date, "dd/MM/yyyy");
+    return format(date, "dd/MM/yyyy", { locale: es });
   };
 
   return (

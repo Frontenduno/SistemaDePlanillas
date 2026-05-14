@@ -10,27 +10,26 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-// 1. Importamos el tipo necesario
 import type { PersonalFormState } from "./PersonalDataForm";
 
 interface EjecutivoFormProps {
   onBack: () => void;
-  // 2. Agregamos las propiedades que WorkDataForm está enviando
   personalForm?: Partial<PersonalFormState>;
   cargo?: string;
 }
 
-// 3. Actualizamos la función para recibir las nuevas props
 export function EjecutivoForm({
   onBack,
   personalForm,
   cargo,
 }: EjecutivoFormProps) {
+  
+  // Inicializamos el estado con los datos de personalForm si existen
   const [formData, setFormData] = useState({
-    nombre: "",
-    apellidoPaterno: "",
-    apellidoMaterno: "",
-    numeroDocumento: "",
+    nombre: personalForm?.nombre || "",
+    apellidoPaterno: personalForm?.apellido || "",            // <--- Cambio aquí
+    apellidoMaterno: personalForm?.segundoApellido || "",     // <--- Cambio aquí
+    numeroDocumento: personalForm?.numeroDocumento || "",
     fechaVinculacion: "",
     fechaRetiro: "",
     sede: "",
@@ -71,13 +70,12 @@ export function EjecutivoForm({
         Datos del Trabajador
       </h2>
 
-      {/* Row 1: Nombre, Apellido Paterno, Apellido Materno (cols 1-3) */}
+      {/* Row 1: Nombre, Apellido Paterno, Apellido Materno */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Nombre
           </label>
-          {/* Aquí podrías usar personalForm.nombre si quisieras pre-llenarlo */}
           <Input
             className="bg-gray-200 h-10 w-full"
             disabled
@@ -113,7 +111,7 @@ export function EjecutivoForm({
         </div>
       </div>
 
-      {/* Row 2: Tipo de Documento (col 1), N° de Documento (col 2), Cargo (col 4) */}
+      {/* Row 2: Tipo de Documento, N° de Documento, Cargo */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -144,7 +142,6 @@ export function EjecutivoForm({
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Cargo
           </label>
-          {/* Usamos la prop 'cargo' para mostrarlo dinámicamente o lo dejamos fijo si prefieres */}
           <Input
             className="bg-gray-200 h-10 w-full"
             disabled
@@ -154,7 +151,7 @@ export function EjecutivoForm({
         </div>
       </div>
 
-      {/* Row 3: Fecha de Vinculación (col 1), Fecha de Retiro (col 2) */}
+      {/* Row 3: Fecha de Vinculación, Fecha de Retiro */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -182,7 +179,7 @@ export function EjecutivoForm({
         </div>
       </div>
 
-      {/* Row 4: Sede, Área, Turno (cols 1-3) */}
+      {/* Row 4: Sede, Área, Turno */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -224,7 +221,7 @@ export function EjecutivoForm({
         </div>
       </div>
 
-      {/* Row 5: Tipo de Contrato (col 1), Tipo de Pago (col 2) */}
+      {/* Row 5: Tipo de Contrato, Tipo de Pago */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -262,7 +259,7 @@ export function EjecutivoForm({
         </div>
       </div>
 
-      {/* Row 6: Ocupación, Jornada Laboral, Jefe Inmediato (cols 1-3) */}
+      {/* Row 6: Ocupación, Jornada Laboral, Jefe Inmediato */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -319,7 +316,7 @@ export function EjecutivoForm({
         </div>
       </div>
 
-      {/* Row 7: Horario Laboral (Inicio y Fin), Días Laborales, Sueldo */}
+      {/* Row 7: Horario Laboral, Días Laborales, Sueldo */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -333,7 +330,6 @@ export function EjecutivoForm({
               onChange={(e) =>
                 handleInputChange("horarioLaboralInicio", e.target.value)
               }
-              placeholder="8:00 AM"
             />
             <span className="flex items-center">hasta</span>
             <Input
@@ -343,7 +339,6 @@ export function EjecutivoForm({
               onChange={(e) =>
                 handleInputChange("horarioLaboralFin", e.target.value)
               }
-              placeholder="6:00 PM"
             />
           </div>
         </div>
@@ -399,9 +394,6 @@ export function EjecutivoForm({
             </SelectContent>
           </Select>
         </div>
-        <div></div>
-        <div></div>
-        <div></div>
       </div>
 
       {/* Row 9: Banco, N° de Cuenta, Fondo Pensionario, Tipo de AFP */}
@@ -457,7 +449,7 @@ export function EjecutivoForm({
         </div>
       </div>
 
-      {/* Row 10: Seguro, Horas Extras, (empty), CUSPP */}
+      {/* Row 10: Seguro, Horas Extras, CUSPP */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -506,7 +498,7 @@ export function EjecutivoForm({
         </div>
       </div>
 
-      {/* Row 11: Bonificaciones Corporativas, CTS, Gratificación (label + checkbox centered) */}
+      {/* Row 11: Bonificaciones Corporativas, CTS, Gratificación */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -554,7 +546,11 @@ export function EjecutivoForm({
         </div>
       </div>
 
-      <div className="flex justify-end mt-8">
+      {/* Se usa onBack para el botón de Volver */}
+      <div className="flex justify-between mt-8">
+        <Button variant="outline" onClick={onBack}>
+          Volver
+        </Button>
         <Button className="px-12 h-10 text-white bg-cyan-500 hover:bg-cyan-600">
           Guardar
         </Button>

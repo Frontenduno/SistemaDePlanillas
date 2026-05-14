@@ -18,14 +18,14 @@ import { colaboradorDetalle } from "../data/asistenciasData";
 
 interface Props {
   codigo: string | null; 
-  // Eliminamos onBack de aquí porque el router se encarga ahora
 }
 
 export default function EdicionColaborador({ codigo }: Props) {
   const router = useRouter();
 
+  // Opción 1: Usamos 'codigo' para inicializar el estado del filtro
   const [filtros, setFiltros] = useState({
-    codigo: "",
+    codigo: codigo || "", 
     nombres: "",
     apellidos: "",
     periodo: "Marzo",
@@ -57,7 +57,6 @@ export default function EdicionColaborador({ codigo }: Props) {
         <h1 className="text-2xl font-bold text-blue-900">
           Asistencias (Tareo): J & P Perifericos
         </h1>
-        {/* Cambio: Usamos router.back() para regresar a la página anterior en el historial */}
         <Button variant="outline" onClick={() => router.back()}>
           Cancelar
         </Button>
@@ -254,7 +253,6 @@ export default function EdicionColaborador({ codigo }: Props) {
         </div>
 
         <div className="flex justify-end mt-6">
-          {/* Cambio: Redirigimos a la tabla de tareo al guardar */}
           <Button
             className="bg-blue-500 text-white hover:bg-blue-600"
             onClick={() => router.push('/asistencias/tareo')}

@@ -39,6 +39,8 @@ const boletaData = {
   ],
 };
 
+// 👇 ESTA ES LA LÍNEA QUE SOLUCIONA EL ERROR 👇
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function IndividualPaySlip({ collaboratorId }: IndividualPaySlipProps) {
   const totalIngresos = boletaData.ingresos.reduce((sum, item) => sum + item.monto, 0);
   const totalDescuentos = boletaData.descuentos.reduce((sum, item) => sum + item.monto, 0);
